@@ -1,0 +1,722 @@
+[
+  {
+    "id": 1,
+    "title": "Aircon leaking on B1",
+    "status": "Open",
+    "category": "HVAC",
+    "priority": "Low",
+    "created": "2026-04-01",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 2,
+    "title": "Office AC not cooling on G/F",
+    "status": "In Progress",
+    "category": "HVAC",
+    "priority": "Critical",
+    "created": "2026-05-02",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 3,
+    "title": "Chiller unit alarm on 1/F",
+    "status": "Closed",
+    "category": "HVAC",
+    "priority": "High",
+    "created": "2026-06-03",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 4,
+    "title": "Light flickering on 3/F",
+    "status": "On Hold",
+    "category": "Electrical",
+    "priority": "Medium",
+    "created": "2026-04-04",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 5,
+    "title": "Power socket faulty on 5/F",
+    "status": "Open",
+    "category": "Electrical",
+    "priority": "Low",
+    "created": "2026-05-05",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 6,
+    "title": "Circuit breaker tripping on 8/F",
+    "status": "In Progress",
+    "category": "Electrical",
+    "priority": "Critical",
+    "created": "2026-06-06",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 7,
+    "title": "Access card reader fault at 10/F",
+    "status": "Closed",
+    "category": "Security",
+    "priority": "High",
+    "created": "2026-04-07",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 8,
+    "title": "CCTV camera offline at 12/F",
+    "status": "On Hold",
+    "category": "Security",
+    "priority": "Medium",
+    "created": "2026-05-08",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 9,
+    "title": "Car park gate issue at 15/F",
+    "status": "Open",
+    "category": "Security",
+    "priority": "Low",
+    "created": "2026-06-09",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 10,
+    "title": "Water leak on 18/F",
+    "status": "In Progress",
+    "category": "Plumbing",
+    "priority": "Critical",
+    "created": "2026-04-10",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 11,
+    "title": "Blocked drain on 20/F",
+    "status": "Closed",
+    "category": "Plumbing",
+    "priority": "High",
+    "created": "2026-05-11",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 12,
+    "title": "Low water pressure on Rooftop",
+    "status": "On Hold",
+    "category": "Plumbing",
+    "priority": "Medium",
+    "created": "2026-06-12",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 13,
+    "title": "Lift button unresponsive at Car Park",
+    "status": "Open",
+    "category": "Lift",
+    "priority": "Low",
+    "created": "2026-04-13",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 14,
+    "title": "Lift door sensor fault at Lobby",
+    "status": "In Progress",
+    "category": "Lift",
+    "priority": "Critical",
+    "created": "2026-05-14",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 15,
+    "title": "Lift cabin vibration at B1",
+    "status": "Closed",
+    "category": "Lift",
+    "priority": "High",
+    "created": "2026-06-15",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 16,
+    "title": "Cracked tile on G/F",
+    "status": "On Hold",
+    "category": "Civil",
+    "priority": "Medium",
+    "created": "2026-04-16",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 17,
+    "title": "Ceiling paint peeling on 1/F",
+    "status": "Open",
+    "category": "Civil",
+    "priority": "Low",
+    "created": "2026-05-17",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 18,
+    "title": "Wall crack reported on 3/F",
+    "status": "In Progress",
+    "category": "Civil",
+    "priority": "Critical",
+    "created": "2026-06-18",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 19,
+    "title": "Fire extinguisher expired at 5/F",
+    "status": "Closed",
+    "category": "Safety",
+    "priority": "High",
+    "created": "2026-04-19",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 20,
+    "title": "Emergency exit sign broken at 8/F",
+    "status": "On Hold",
+    "category": "Safety",
+    "priority": "Medium",
+    "created": "2026-05-20",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 21,
+    "title": "Smoke detector fault at 10/F",
+    "status": "Open",
+    "category": "Safety",
+    "priority": "Low",
+    "created": "2026-06-21",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 22,
+    "title": "Restroom cleaning schedule missed at 12/F",
+    "status": "In Progress",
+    "category": "Cleaning",
+    "priority": "Critical",
+    "created": "2026-04-22",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 23,
+    "title": "Spill cleanup needed at 15/F",
+    "status": "Closed",
+    "category": "Cleaning",
+    "priority": "High",
+    "created": "2026-05-23",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 24,
+    "title": "Overgrown plants at 18/F",
+    "status": "On Hold",
+    "category": "Landscaping",
+    "priority": "Medium",
+    "created": "2026-06-24",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 25,
+    "title": "Irrigation system fault at 20/F",
+    "status": "Open",
+    "category": "Landscaping",
+    "priority": "Low",
+    "created": "2026-04-25",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 26,
+    "title": "WiFi access point down on Rooftop",
+    "status": "In Progress",
+    "category": "IT",
+    "priority": "Critical",
+    "created": "2026-05-26",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 27,
+    "title": "Printer network issue on Car Park",
+    "status": "Closed",
+    "category": "IT",
+    "priority": "High",
+    "created": "2026-06-27",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 28,
+    "title": "Aircon leaking on Lobby",
+    "status": "On Hold",
+    "category": "HVAC",
+    "priority": "Medium",
+    "created": "2026-04-28",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 29,
+    "title": "Office AC not cooling on B1",
+    "status": "Open",
+    "category": "HVAC",
+    "priority": "Low",
+    "created": "2026-05-01",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 30,
+    "title": "Chiller unit alarm on G/F",
+    "status": "In Progress",
+    "category": "HVAC",
+    "priority": "Critical",
+    "created": "2026-06-02",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 31,
+    "title": "Light flickering on 1/F",
+    "status": "Closed",
+    "category": "Electrical",
+    "priority": "High",
+    "created": "2026-04-03",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 32,
+    "title": "Power socket faulty on 3/F",
+    "status": "On Hold",
+    "category": "Electrical",
+    "priority": "Medium",
+    "created": "2026-05-04",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 33,
+    "title": "Circuit breaker tripping on 5/F",
+    "status": "Open",
+    "category": "Electrical",
+    "priority": "Low",
+    "created": "2026-06-05",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 34,
+    "title": "Access card reader fault at 8/F",
+    "status": "In Progress",
+    "category": "Security",
+    "priority": "Critical",
+    "created": "2026-04-06",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 35,
+    "title": "CCTV camera offline at 10/F",
+    "status": "Closed",
+    "category": "Security",
+    "priority": "High",
+    "created": "2026-05-07",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 36,
+    "title": "Car park gate issue at 12/F",
+    "status": "On Hold",
+    "category": "Security",
+    "priority": "Medium",
+    "created": "2026-06-08",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 37,
+    "title": "Water leak on 15/F",
+    "status": "Open",
+    "category": "Plumbing",
+    "priority": "Low",
+    "created": "2026-04-09",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 38,
+    "title": "Blocked drain on 18/F",
+    "status": "In Progress",
+    "category": "Plumbing",
+    "priority": "Critical",
+    "created": "2026-05-10",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 39,
+    "title": "Low water pressure on 20/F",
+    "status": "Closed",
+    "category": "Plumbing",
+    "priority": "High",
+    "created": "2026-06-11",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 40,
+    "title": "Lift button unresponsive at Rooftop",
+    "status": "On Hold",
+    "category": "Lift",
+    "priority": "Medium",
+    "created": "2026-04-12",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 41,
+    "title": "Lift door sensor fault at Car Park",
+    "status": "Open",
+    "category": "Lift",
+    "priority": "Low",
+    "created": "2026-05-13",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 42,
+    "title": "Lift cabin vibration at Lobby",
+    "status": "In Progress",
+    "category": "Lift",
+    "priority": "Critical",
+    "created": "2026-06-14",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 43,
+    "title": "Cracked tile on B1",
+    "status": "Closed",
+    "category": "Civil",
+    "priority": "High",
+    "created": "2026-04-15",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 44,
+    "title": "Ceiling paint peeling on G/F",
+    "status": "On Hold",
+    "category": "Civil",
+    "priority": "Medium",
+    "created": "2026-05-16",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 45,
+    "title": "Wall crack reported on 1/F",
+    "status": "Open",
+    "category": "Civil",
+    "priority": "Low",
+    "created": "2026-06-17",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 46,
+    "title": "Fire extinguisher expired at 3/F",
+    "status": "In Progress",
+    "category": "Safety",
+    "priority": "Critical",
+    "created": "2026-04-18",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 47,
+    "title": "Emergency exit sign broken at 5/F",
+    "status": "Closed",
+    "category": "Safety",
+    "priority": "High",
+    "created": "2026-05-19",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 48,
+    "title": "Smoke detector fault at 8/F",
+    "status": "On Hold",
+    "category": "Safety",
+    "priority": "Medium",
+    "created": "2026-06-20",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 49,
+    "title": "Restroom cleaning schedule missed at 10/F",
+    "status": "Open",
+    "category": "Cleaning",
+    "priority": "Low",
+    "created": "2026-04-21",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 50,
+    "title": "Spill cleanup needed at 12/F",
+    "status": "In Progress",
+    "category": "Cleaning",
+    "priority": "Critical",
+    "created": "2026-05-22",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 51,
+    "title": "Overgrown plants at 15/F",
+    "status": "Closed",
+    "category": "Landscaping",
+    "priority": "High",
+    "created": "2026-06-23",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 52,
+    "title": "Irrigation system fault at 18/F",
+    "status": "On Hold",
+    "category": "Landscaping",
+    "priority": "Medium",
+    "created": "2026-04-24",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 53,
+    "title": "WiFi access point down on 20/F",
+    "status": "Open",
+    "category": "IT",
+    "priority": "Low",
+    "created": "2026-05-25",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 54,
+    "title": "Printer network issue on Rooftop",
+    "status": "In Progress",
+    "category": "IT",
+    "priority": "Critical",
+    "created": "2026-06-26",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 55,
+    "title": "Aircon leaking on Car Park",
+    "status": "Closed",
+    "category": "HVAC",
+    "priority": "High",
+    "created": "2026-04-27",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 56,
+    "title": "Office AC not cooling on Lobby",
+    "status": "On Hold",
+    "category": "HVAC",
+    "priority": "Medium",
+    "created": "2026-05-28",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 57,
+    "title": "Chiller unit alarm on B1",
+    "status": "Open",
+    "category": "HVAC",
+    "priority": "Low",
+    "created": "2026-06-01",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 58,
+    "title": "Light flickering on G/F",
+    "status": "In Progress",
+    "category": "Electrical",
+    "priority": "Critical",
+    "created": "2026-04-02",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 59,
+    "title": "Power socket faulty on 1/F",
+    "status": "Closed",
+    "category": "Electrical",
+    "priority": "High",
+    "created": "2026-05-03",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 60,
+    "title": "Circuit breaker tripping on 3/F",
+    "status": "On Hold",
+    "category": "Electrical",
+    "priority": "Medium",
+    "created": "2026-06-04",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 61,
+    "title": "Access card reader fault at 5/F",
+    "status": "Open",
+    "category": "Security",
+    "priority": "Low",
+    "created": "2026-04-05",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 62,
+    "title": "CCTV camera offline at 8/F",
+    "status": "In Progress",
+    "category": "Security",
+    "priority": "Critical",
+    "created": "2026-05-06",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 63,
+    "title": "Car park gate issue at 10/F",
+    "status": "Closed",
+    "category": "Security",
+    "priority": "High",
+    "created": "2026-06-07",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 64,
+    "title": "Water leak on 12/F",
+    "status": "On Hold",
+    "category": "Plumbing",
+    "priority": "Medium",
+    "created": "2026-04-08",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 65,
+    "title": "Blocked drain on 15/F",
+    "status": "Open",
+    "category": "Plumbing",
+    "priority": "Low",
+    "created": "2026-05-09",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 66,
+    "title": "Low water pressure on 18/F",
+    "status": "In Progress",
+    "category": "Plumbing",
+    "priority": "Critical",
+    "created": "2026-06-10",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 67,
+    "title": "Lift button unresponsive at 20/F",
+    "status": "Closed",
+    "category": "Lift",
+    "priority": "High",
+    "created": "2026-04-11",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 68,
+    "title": "Lift door sensor fault at Rooftop",
+    "status": "On Hold",
+    "category": "Lift",
+    "priority": "Medium",
+    "created": "2026-05-12",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 69,
+    "title": "Lift cabin vibration at Car Park",
+    "status": "Open",
+    "category": "Lift",
+    "priority": "Low",
+    "created": "2026-06-13",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 70,
+    "title": "Cracked tile on Lobby",
+    "status": "In Progress",
+    "category": "Civil",
+    "priority": "Critical",
+    "created": "2026-04-14",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 71,
+    "title": "Ceiling paint peeling on B1",
+    "status": "Closed",
+    "category": "Civil",
+    "priority": "High",
+    "created": "2026-05-15",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 72,
+    "title": "Wall crack reported on G/F",
+    "status": "On Hold",
+    "category": "Civil",
+    "priority": "Medium",
+    "created": "2026-06-16",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 73,
+    "title": "Fire extinguisher expired at 1/F",
+    "status": "Open",
+    "category": "Safety",
+    "priority": "Low",
+    "created": "2026-04-17",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 74,
+    "title": "Emergency exit sign broken at 3/F",
+    "status": "In Progress",
+    "category": "Safety",
+    "priority": "Critical",
+    "created": "2026-05-18",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 75,
+    "title": "Smoke detector fault at 5/F",
+    "status": "Closed",
+    "category": "Safety",
+    "priority": "High",
+    "created": "2026-06-19",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 76,
+    "title": "Restroom cleaning schedule missed at 8/F",
+    "status": "On Hold",
+    "category": "Cleaning",
+    "priority": "Medium",
+    "created": "2026-04-20",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 77,
+    "title": "Spill cleanup needed at 10/F",
+    "status": "Open",
+    "category": "Cleaning",
+    "priority": "Low",
+    "created": "2026-05-21",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 78,
+    "title": "Overgrown plants at 12/F",
+    "status": "In Progress",
+    "category": "Landscaping",
+    "priority": "Critical",
+    "created": "2026-06-22",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 79,
+    "title": "Irrigation system fault at 15/F",
+    "status": "Closed",
+    "category": "Landscaping",
+    "priority": "High",
+    "created": "2026-04-23",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  },
+  {
+    "id": 80,
+    "title": "WiFi access point down on 18/F",
+    "status": "On Hold",
+    "category": "IT",
+    "priority": "Medium",
+    "created": "2026-05-24",
+    "description": "Reported by building staff. Requires inspection and follow-up."
+  }
+]
