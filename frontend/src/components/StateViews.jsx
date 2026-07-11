@@ -6,9 +6,9 @@ function StatsSkeleton() {
   return (
     <div className="stats-grid">
       {Array.from({ length: 5 }).map((_, index) => (
-        <div key={index} className="stat-card stat-card--skeleton">
-          <Skeleton className="skeleton--value" />
-          <Skeleton className="skeleton--label" />
+        <div key={index} className="stat-card stat-card--kpi stat-card--skeleton">
+          <Skeleton style={{ width: '60%', height: 10, marginBottom: 12 }} />
+          <Skeleton className="skeleton--value" style={{ margin: '0 0 0' }} />
         </div>
       ))}
     </div>
@@ -54,14 +54,16 @@ function BoardSkeleton() {
 
 function CategorySkeleton() {
   return (
-    <div className="category-list">
-      {Array.from({ length: 5 }).map((_, index) => (
-        <div key={index} className="category-row">
-          <Skeleton style={{ width: 80 }} />
-          <Skeleton className="skeleton--bar" />
-          <Skeleton style={{ width: 24 }} />
-        </div>
-      ))}
+    <div className="category-chart-skeleton">
+      <Skeleton className="category-chart-skeleton__donut" />
+      <div className="category-chart-skeleton__legend">
+        {Array.from({ length: 5 }).map((_, index) => (
+          <div key={index} className="category-chart-skeleton__row">
+            <Skeleton style={{ width: '70%', height: 12 }} />
+            <Skeleton className="skeleton--bar" />
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

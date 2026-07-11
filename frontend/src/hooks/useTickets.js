@@ -10,13 +10,15 @@ function buildFilterParams(filters) {
   return params;
 }
 
-export function useTickets(filters) {
+export function useTickets(filters, { silent = false } = {}) {
   const [tickets, setTickets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(!silent);
   const [error, setError] = useState(null);
 
   const fetchTickets = useCallback(async () => {
-    setLoading(true);
+    if (!silent) {
+      setLoading(true);
+    }
     setError(null);
 
     const params = buildFilterParams(filters);
@@ -31,9 +33,11 @@ export function useTickets(filters) {
     } catch (err) {
       setError(err.message);
     } finally {
-      setLoading(false);
+      if (!silent) {
+        setLoading(false);
+      }
     }
-  }, [filters]);
+  }, [filters, silent]);
 
   useEffect(() => {
     fetchTickets();

@@ -1,124 +1,32 @@
-import {
-  DndContext,
-  closestCenter,
-  KeyboardSensor,
-  PointerSensor,
-  useSensor,
-  useSensors,
-} from '@dnd-kit/core';
-import {
-  SortableContext,
-  sortableKeyboardCoordinates,
-  useSortable,
-  verticalListSortingStrategy,
-} from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
 import { WIDGET_DEFINITIONS } from '../hooks/useDashboardLayout';
 
-const widgetMap = Object.fromEntries(WIDGET_DEFINITIONS.map((w) => [w.id, w]));
-
-function SortableWidgetToggle({ id, visible, onToggle }) {
-  const widget = widgetMap[id];
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id });
-
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
-
-  if (!widget) return null;
-
-  return (
-    <div
-      ref={setNodeRef}
-      style={style}
-      className={`widget-toggle${isDragging ? ' widget-toggle--dragging' : ''}`}
-    >
-      <button
-        type="button"
-        className="widget-toggle__drag"
-        {...attributes}
-        {...listeners}
-        aria-label={`Drag to reorder ${widget.title}`}
-        title="Drag to reorder"
-      >
-        ⠿
-      </button>
-      <label className="widget-toggle__content">
-        <input
-          type="checkbox"
-          checked={visible[id] ?? false}
-          onChange={() => onToggle(id)}
-        />
-        <span className="widget-toggle__info">
-          <span className="widget-toggle__name">{widget.title}</span>
-          <span className="widget-toggle__desc">{widget.description}</span>
-        </span>
-      </label>
-    </div>
-  );
-}
-
-export function DashboardCustomizer({ order, visible, onToggle, onReorder, onClose, onReset }) {
-  const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
-    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
-  );
-
-  const handleDragEnd = (event) => {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-
-    const oldIndex = order.indexOf(active.id);
-    const newIndex = order.indexOf(over.id);
-
-    const newOrder = [...order];
-    newOrder.splice(oldIndex, 1);
-    newOrder.splice(newIndex, 0, active.id);
-
-    onReorder(newOrder);
-  };
-
+export function DashboardCustomizer({ visible, onToggle, onClose, onReset }) {
   return (
     <div className="customizer-overlay" onClick={onClose}>
       <div className="customizer-panel" onClick={(e) => e.stopPropagation()}>
         <h2>Customize Dashboard</h2>
-        <p>Choose which widgets to display and drag them to reorder below.</p>
+        <p>Choose which widgets to display and drag them to reorder on the main view.</p>
 
-        <DndContext
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
-          <SortableContext items={order} strategy={verticalListSortingStrategy}>
-            <div className="customizer-list">
-              {order.map((id) => (
-                <SortableWidgetToggle
-                  key={id}
-                  id={id}
-                  visible={visible}
-                  onToggle={onToggle}
-                />
-              ))}
+        {WIDGET_DEFINITIONS.map((widget) => (
+          <label key={widget.id} className="widget-toggle">
+            <input
+              type="checkbox"
+              checked={visible[widget.id] ?? false}
+              onChange={() => onToggle(widget.id)}
+            />
+            <div className="widget-toggle__info">
+              <div className="widget-toggle__name">{widget.title}</div>
+              <div className="widget-toggle__desc">{widget.description}</div>
             </div>
-          </SortableContext>
-        </DndContext>
+          </label>
+        ))}
 
-        <div className="customizer-actions">
-          <button type="button" className="btn btn--primary" onClick={onReset}>
-            Reset to default
-          </button>
-          <button type="button" className="btn btn--outline" onClick={onClose}>
-            Done
-          </button>
-        </div>
+        <button type="button" className="btn btn--primary" onClick={onReset}>
+          Reset to default
+        </button>
+        <button type="button" className="btn btn--outline" onClick={onClose}>
+          Done
+        </button>
       </div>
     </div>
   );

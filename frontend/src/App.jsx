@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Header } from './components/Header';
 import { FilterBar, EMPTY_FILTERS } from './components/FilterBar';
 import { DraggableDashboard } from './components/DraggableDashboard';
@@ -22,6 +22,16 @@ function App() {
   const [showCustomizer, setShowCustomizer] = useState(false);
 
   const { tickets, loading, error, refetch } = useTickets(filters);
+
+  const boardFilters = useMemo(
+    () => ({
+      status: filters.status,
+      category: filters.category,
+      priority: [],
+    }),
+    [filters.status, filters.category]
+  );
+  const { tickets: boardTickets } = useTickets(boardFilters, { silent: true });
   const { meta } = useMeta();
   const { layout, visibleWidgets, toggleWidget, reorderWidgets, resetLayout } =
     useDashboardLayout();
@@ -33,9 +43,27 @@ function App() {
 
   const clearFilters = () => setFilters(EMPTY_FILTERS);
 
+  const toggleUrgentFilter = () => {
+    const urgentPriorities = ['High', 'Critical'];
+    const isActive =
+      filters.priority.length === urgentPriorities.length &&
+      urgentPriorities.every((p) => filters.priority.includes(p));
+
+    setFilters((prev) => ({
+      ...prev,
+      priority: isActive ? [] : [...urgentPriorities],
+    }));
+  };
+
+  const activeCases = useMemo(
+    () => tickets.filter((t) => t.status !== 'Closed').length,
+    [tickets]
+  );
+
   const widgetContext = {
     hasActiveFilters,
     onClearFilters: clearFilters,
+    onFilterUrgent: toggleUrgentFilter,
   };
 
   const renderWidget = (id) => {
@@ -45,7 +73,12 @@ function App() {
       case 'table':
         return <TicketTable tickets={tickets} {...widgetContext} />;
       case 'board':
-        return <StatusBoard tickets={tickets} {...widgetContext} />;
+        return (
+          <StatusBoard
+            tickets={boardTickets}
+            {...widgetContext}
+          />
+        );
       case 'categories':
         return <CategoryBreakdown tickets={tickets} {...widgetContext} />;
       default:
@@ -55,7 +88,11 @@ function App() {
 
   return (
     <div className="app">
-      <Header onCustomize={() => setShowCustomizer(true)} />
+      <Header
+        onCustomize={() => setShowCustomizer(true)}
+        activeCases={activeCases}
+        totalTickets={tickets.length}
+      />
 
       <main className="main">
         <FilterBar

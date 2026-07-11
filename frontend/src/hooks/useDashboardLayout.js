@@ -5,23 +5,23 @@ const STORAGE_KEY = 'butler-dashboard-layout';
 export const WIDGET_DEFINITIONS = [
   {
     id: 'stats',
-    title: 'Overview Stats',
+    title: 'Key Metrics',
     description: 'Ticket counts by status and priority',
   },
   {
     id: 'table',
-    title: 'Ticket List',
-    description: 'Sortable table of all matching tickets',
+    title: 'Recent Tickets',
+    description: 'Table of all matching tickets',
   },
   {
     id: 'board',
     title: 'Status Board',
-    description: 'Kanban-style columns grouped by status',
+    description: 'Kanban columns grouped by status',
   },
   {
     id: 'categories',
     title: 'Category Breakdown',
-    description: 'Visual breakdown by maintenance category',
+    description: 'Distribution by maintenance category',
   },
 ];
 
