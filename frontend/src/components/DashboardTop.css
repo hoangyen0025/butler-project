@@ -1,0 +1,59 @@
+.dashboard-top {
+  margin-bottom: 1.25rem;
+}
+
+.dashboard-top .filters {
+  margin-bottom: 0;
+}
+
+.dashboard-top .filters__row {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.dashboard-top .multi-select {
+  min-width: 180px;
+  width: auto;
+}
+
+.dashboard-top .filters__clear {
+  margin-top: 1.35rem;
+  align-self: flex-start;
+}
+
+@media (max-width: 960px) {
+  .dashboard-top .filters__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .dashboard-top .multi-select {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .dashboard-top .filters__clear {
+    margin-top: 0;
+    align-self: stretch;
+  }
+}
+
+/* Key metrics layout inside draggable widget */
+.widget .stats-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.widget .stat-card--wide {
+  grid-column: 1 / -1;
+}
+
+@media (min-width: 768px) {
+  .widget .stats-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .widget .stat-card--wide {
+    grid-column: span 2;
+  }
+}

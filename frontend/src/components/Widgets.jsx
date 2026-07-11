@@ -5,7 +5,7 @@ import { usePagination, Pagination } from './Pagination';
 import { statusClass, priorityClass, formatDate, isActiveUrgent } from '../utils';
 import './UrgentStrip.css';
 
-const TICKETS_PER_PAGE = 10;
+const TICKETS_PER_PAGE = 5;
 const STATUS_BOARD_PER_PAGE = 5;
 const URGENT_PER_PAGE = 5;
 
@@ -26,9 +26,9 @@ function getCategoryColor(index) {
   return CATEGORY_CHART_COLORS[index % CATEGORY_CHART_COLORS.length];
 }
 
-function CategoryDonut({ data, total }) {
-  const size = 148;
-  const stroke = 22;
+function CategoryDonut({ data, total, compact = false }) {
+  const size = compact ? 136 : 148;
+  const stroke = compact ? 18 : 22;
   const radius = (size - stroke) / 2;
   const cx = size / 2;
   const cy = size / 2;
@@ -167,23 +167,29 @@ export function StatsCards({ tickets }) {
   ).length;
 
   const stats = [
-    { label: 'Open', value: open, className: 'open', pill: 'Active', pillType: 'healthy' },
-    { label: 'In Progress', value: inProgress, className: 'progress', pill: 'Active', pillType: 'warn' },
-    { label: 'Closed', value: closed, className: 'closed', pill: 'Resolved', pillType: 'healthy' },
-    { label: 'On Hold', value: onHold, className: 'hold', pill: onHold > 0 ? 'Paused' : 'Clear', pillType: onHold > 0 ? 'muted' : 'healthy' },
     {
       label: 'High / Critical',
       value: highPriority,
       className: 'high',
       pill: highPriority > 0 ? 'Alert' : 'Healthy',
       pillType: highPriority > 0 ? 'alert' : 'healthy',
+      wide: true,
     },
+    { label: 'Open', value: open, className: 'open', pill: 'Active', pillType: 'healthy' },
+    { label: 'In Progress', value: inProgress, className: 'progress', pill: 'Active', pillType: 'warn' },
+    { label: 'Closed', value: closed, className: 'closed', pill: 'Resolved', pillType: 'healthy' },
+    { label: 'On Hold', value: onHold, className: 'hold', pill: onHold > 0 ? 'Paused' : 'Clear', pillType: onHold > 0 ? 'muted' : 'healthy' },
   ];
 
   return (
     <div className="stats-grid">
       {stats.map((stat) => (
-        <div key={stat.label} className={`stat-card stat-card--kpi stat-card--${stat.className}`}>
+        <div
+          key={stat.label}
+          className={`stat-card stat-card--kpi stat-card--${stat.className}${
+            stat.wide ? ' stat-card--wide' : ''
+          }`}
+        >
           <div className="stat-card__top">
             <span className="stat-card__label">{stat.label}</span>
             <span className={`stat-card__pill stat-card__pill--${stat.pillType}`}>
@@ -340,7 +346,7 @@ export function StatusBoard({ tickets, onFilterUrgent }) {
   );
 }
 
-export function CategoryBreakdown({ tickets }) {
+export function CategoryBreakdown({ tickets, compact = false }) {
   const counts = tickets.reduce((acc, t) => {
     acc[t.category] = (acc[t.category] || 0) + 1;
     return acc;
@@ -348,7 +354,7 @@ export function CategoryBreakdown({ tickets }) {
 
   const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]);
   const total = tickets.length;
-  const { visibleItems, isLong, expanded, toggle } = useCollapsibleItems(sorted, 6);
+  const { visibleItems, isLong, expanded, toggle } = useCollapsibleItems(sorted, compact ? 4 : 6);
 
   if (sorted.length === 0) {
     return <div className="empty-state">No category data available.</div>;
@@ -359,8 +365,8 @@ export function CategoryBreakdown({ tickets }) {
   );
 
   return (
-    <div className="category-chart">
-      <CategoryDonut data={sorted} total={total} />
+    <div className={`category-chart${compact ? ' category-chart--compact' : ''}`}>
+      <CategoryDonut data={sorted} total={total} compact={compact} />
       <div className="category-legend" role="list" aria-label="Category breakdown">
         {visibleItems.map(([category, count]) => {
           const pct = total > 0 ? (count / total) * 100 : 0;

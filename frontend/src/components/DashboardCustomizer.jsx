@@ -72,14 +72,17 @@ export function DashboardCustomizer({ order, visible, onToggle, onReorder, onClo
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
+  const widgetOrder = order.filter((id) => widgetMap[id]);
+
   const handleDragEnd = (event) => {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    const oldIndex = order.indexOf(active.id);
-    const newIndex = order.indexOf(over.id);
+    const oldIndex = widgetOrder.indexOf(active.id);
+    const newIndex = widgetOrder.indexOf(over.id);
+    if (oldIndex === -1 || newIndex === -1) return;
 
-    const newOrder = [...order];
+    const newOrder = [...widgetOrder];
     newOrder.splice(oldIndex, 1);
     newOrder.splice(newIndex, 0, active.id);
 
@@ -90,16 +93,16 @@ export function DashboardCustomizer({ order, visible, onToggle, onReorder, onClo
     <div className="customizer-overlay" onClick={onClose}>
       <div className="customizer-panel" onClick={(e) => e.stopPropagation()}>
         <h2>Customize Dashboard</h2>
-        <p>Choose which widgets to display and drag them to reorder below.</p>
+        <p>Choose which widgets to display. Drag on the dashboard or below to reorder.</p>
 
         <DndContext
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
-          <SortableContext items={order} strategy={verticalListSortingStrategy}>
+          <SortableContext items={widgetOrder} strategy={verticalListSortingStrategy}>
             <div className="customizer-list">
-              {order.map((id) => (
+              {widgetOrder.map((id) => (
                 <SortableWidgetToggle
                   key={id}
                   id={id}

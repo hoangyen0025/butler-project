@@ -2,10 +2,14 @@ function Skeleton({ className = '', style }) {
   return <div className={`skeleton ${className}`.trim()} style={style} aria-hidden="true" />;
 }
 
-function StatsSkeleton() {
+export function StatsSkeleton() {
   return (
     <div className="stats-grid">
-      {Array.from({ length: 5 }).map((_, index) => (
+      <div className="stat-card stat-card--kpi stat-card--skeleton stat-card--wide">
+        <Skeleton style={{ width: '60%', height: 10, marginBottom: 12 }} />
+        <Skeleton className="skeleton--value" style={{ margin: '0 0 0' }} />
+      </div>
+      {Array.from({ length: 4 }).map((_, index) => (
         <div key={index} className="stat-card stat-card--kpi stat-card--skeleton">
           <Skeleton style={{ width: '60%', height: 10, marginBottom: 12 }} />
           <Skeleton className="skeleton--value" style={{ margin: '0 0 0' }} />
@@ -52,7 +56,25 @@ function BoardSkeleton() {
   );
 }
 
-function CategorySkeleton() {
+export function CategorySkeleton({ compact = false }) {
+  if (compact) {
+    return (
+      <div className="category-chart category-chart--compact">
+        <div className="category-donut" style={{ width: 136, height: 136, margin: '0 auto' }}>
+          <Skeleton style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+        </div>
+        <div className="category-chart-skeleton__legend">
+          {Array.from({ length: 4 }).map((_, index) => (
+            <div key={index} className="category-chart-skeleton__row">
+              <Skeleton style={{ width: '70%', height: 12 }} />
+              <Skeleton className="skeleton--bar" />
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="category-chart-skeleton">
       <Skeleton className="category-chart-skeleton__donut" />
@@ -151,7 +173,7 @@ export function EmptyWidgetsState({ onCustomize }) {
       variant="widgets"
       icon="📋"
       title="No widgets selected"
-      message="Choose which sections to show on your dashboard — stats, ticket list, status board, and more."
+      message="Choose which sections to show on your dashboard — key metrics, ticket list, status board, and more."
       actionLabel="Customize dashboard"
       onAction={onCustomize}
     />

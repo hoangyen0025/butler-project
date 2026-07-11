@@ -4,6 +4,8 @@ import { FilterBar, EMPTY_FILTERS } from './components/FilterBar';
 import { DraggableDashboard } from './components/DraggableDashboard';
 import { DashboardCustomizer } from './components/DashboardCustomizer';
 import { DashboardLoadingSkeleton, ErrorState } from './components/StateViews';
+import './components/DashboardTop.css';
+import './components/LayoutFix.css';
 import {
   StatsCards,
   TicketTable,
@@ -33,8 +35,14 @@ function App() {
   );
   const { tickets: boardTickets } = useTickets(boardFilters, { silent: true });
   const { meta } = useMeta();
-  const { layout, visibleWidgets, toggleWidget, reorderWidgets, resetLayout } =
-    useDashboardLayout();
+  const {
+    layout,
+    visibleWidgets,
+    toggleWidget,
+    reorderWidgets,
+    reorderVisibleWidgets,
+    resetLayout,
+  } = useDashboardLayout();
 
   const hasActiveFilters =
     filters.status.length > 0 ||
@@ -95,13 +103,15 @@ function App() {
       />
 
       <main className="main">
-        <FilterBar
-          filters={filters}
-          onChange={setFilters}
-          meta={meta}
-          resultCount={tickets.length}
-          loading={loading}
-        />
+        <section className="dashboard-top" aria-label="Filters">
+          <FilterBar
+            filters={filters}
+            onChange={setFilters}
+            meta={meta}
+            resultCount={tickets.length}
+            loading={loading}
+          />
+        </section>
 
         {loading && <DashboardLoadingSkeleton widgetIds={visibleWidgets} />}
 
@@ -113,6 +123,7 @@ function App() {
           <DraggableDashboard
             widgetIds={visibleWidgets}
             renderWidget={renderWidget}
+            onReorder={reorderVisibleWidgets}
             onCustomize={() => setShowCustomizer(true)}
           />
         )}

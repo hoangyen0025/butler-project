@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+﻿import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'butler-dashboard-layout';
 
@@ -33,13 +33,43 @@ const DEFAULT_VISIBLE = {
   categories: true,
 };
 
+function normalizeOrder(order) {
+  const known = new Set(DEFAULT_ORDER);
+  const normalized = order.filter((id) => known.has(id));
+  DEFAULT_ORDER.forEach((id) => {
+    if (!normalized.includes(id)) normalized.push(id);
+  });
+  return normalized;
+}
+
+function mergeVisibleOrder(fullOrder, newVisibleOrder, visible) {
+  const result = [];
+  let visibleIdx = 0;
+
+  for (const id of fullOrder) {
+    if (visible[id]) {
+      if (visibleIdx < newVisibleOrder.length) {
+        result.push(newVisibleOrder[visibleIdx++]);
+      }
+    } else {
+      result.push(id);
+    }
+  }
+
+  while (visibleIdx < newVisibleOrder.length) {
+    result.push(newVisibleOrder[visibleIdx++]);
+  }
+
+  return normalizeOrder(result);
+}
+
 function loadLayout() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       const parsed = JSON.parse(saved);
       return {
-        order: parsed.order || DEFAULT_ORDER,
+        order: normalizeOrder(parsed.order || DEFAULT_ORDER),
         visible: { ...DEFAULT_VISIBLE, ...parsed.visible },
       };
     }
@@ -64,7 +94,14 @@ export function useDashboardLayout() {
   };
 
   const reorderWidgets = (newOrder) => {
-    setLayout((prev) => ({ ...prev, order: newOrder }));
+    setLayout((prev) => ({ ...prev, order: normalizeOrder(newOrder) }));
+  };
+
+  const reorderVisibleWidgets = (newVisibleOrder) => {
+    setLayout((prev) => ({
+      ...prev,
+      order: mergeVisibleOrder(prev.order, newVisibleOrder, prev.visible),
+    }));
   };
 
   const resetLayout = () => {
@@ -78,6 +115,7 @@ export function useDashboardLayout() {
     visibleWidgets,
     toggleWidget,
     reorderWidgets,
+    reorderVisibleWidgets,
     resetLayout,
   };
 }
