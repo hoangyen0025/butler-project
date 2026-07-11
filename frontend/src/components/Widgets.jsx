@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import { Badge } from './Badge';
 import { useCollapsibleItems, ListToggle } from './CollapsibleList';
 import { usePagination, Pagination } from './Pagination';
@@ -79,8 +80,12 @@ function CategoryDonut({ data, total }) {
 }
 
 function UrgentStrip({ tickets, onFilterUrgent }) {
-  const urgentTickets = [...tickets.filter(isActiveUrgent)].sort(
-    (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+  const urgentTickets = useMemo(
+    () =>
+      [...tickets.filter(isActiveUrgent)].sort(
+        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+      ),
+    [tickets]
   );
   const {
     page,

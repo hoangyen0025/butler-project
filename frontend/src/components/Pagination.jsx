@@ -3,11 +3,12 @@ import { useState, useEffect, useMemo } from 'react';
 export function usePagination(items, pageSize = 10) {
   const [page, setPage] = useState(1);
 
+  const itemsSignature = `${items.length}:${items.map((item) => item.id).join(',')}`;
   const totalPages = Math.max(1, Math.ceil(items.length / pageSize));
 
   useEffect(() => {
     setPage(1);
-  }, [items]);
+  }, [itemsSignature]);
 
   useEffect(() => {
     if (page > totalPages) {
