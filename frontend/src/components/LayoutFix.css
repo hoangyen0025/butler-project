@@ -1,4 +1,4 @@
-/* Prevent horizontal scrollbar on table and page */
+/* Prevent horizontal scrollbar on table only — avoid clipping filter dropdowns */
 body {
   overflow-x: hidden;
 }
@@ -20,16 +20,21 @@ body {
   overflow-x: hidden;
 }
 
-.main {
-  overflow-x: hidden;
-}
-
-.dashboard-top {
-  overflow-x: hidden;
-}
-
 .category-legend__label {
   min-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Keep filter dropdowns visible above other content */
+.dashboard-top,
+.dashboard-top .filters,
+.filters__row,
+.filter-group,
+.multi-select {
+  overflow: visible;
+}
+
+.multi-select__dropdown {
+  z-index: 200;
 }

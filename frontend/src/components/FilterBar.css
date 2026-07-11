@@ -8,3 +8,16 @@
   background: #c9683f;
   border-color: #c9683f;
 }
+
+.filters,
+.filters__row {
+  overflow: visible;
+}
+
+.multi-select {
+  overflow: visible;
+}
+
+.multi-select__dropdown {
+  z-index: 200;
+}
