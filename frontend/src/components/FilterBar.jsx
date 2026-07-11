@@ -1,4 +1,5 @@
 import { MultiSelectFilter } from './MultiSelectFilter';
+import './FilterBar.css';
 
 export const EMPTY_FILTERS = {
   status: [],
@@ -52,7 +53,7 @@ export function FilterBar({ filters, onChange, meta, resultCount, loading = fals
 
         <button
           type="button"
-          className="btn btn--outline filters__clear"
+          className={`btn btn--outline filters__clear${hasFilters ? ' filters__clear--active' : ''}`}
           onClick={clearFilters}
           disabled={!hasFilters}
           title="Clear all filters"

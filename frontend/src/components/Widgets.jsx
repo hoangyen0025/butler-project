@@ -1,9 +1,12 @@
 import { Badge } from './Badge';
 import { useCollapsibleItems, ListToggle } from './CollapsibleList';
 import { usePagination, Pagination } from './Pagination';
-import { statusClass, priorityClass, formatDate, isActiveUrgent, sortByUrgentFirst } from '../utils';
+import { statusClass, priorityClass, formatDate, isActiveUrgent } from '../utils';
+import './UrgentStrip.css';
 
 const TICKETS_PER_PAGE = 10;
+const STATUS_BOARD_PER_PAGE = 5;
+const URGENT_PER_PAGE = 5;
 
 const CATEGORY_CHART_COLORS = [
   '#e07a4f',
@@ -76,24 +79,36 @@ function CategoryDonut({ data, total }) {
 }
 
 function UrgentStrip({ tickets, onFilterUrgent }) {
-  const urgentTickets = sortByUrgentFirst(tickets.filter(isActiveUrgent));
+  const urgentTickets = [...tickets.filter(isActiveUrgent)].sort(
+    (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
+  );
+  const {
+    page,
+    pageItems,
+    totalPages,
+    totalItems,
+    pageSize,
+    goToPage,
+    goNext,
+    goPrev,
+    hasPrev,
+    hasNext,
+  } = usePagination(urgentTickets, URGENT_PER_PAGE);
 
   if (urgentTickets.length === 0) {
     return null;
   }
-
-  const preview = urgentTickets.slice(0, 5);
 
   return (
     <div className="urgent-strip" role="region" aria-label="Urgent tickets">
       <div className="urgent-strip__header">
         <div className="urgent-strip__title">
           <span className="urgent-strip__icon" aria-hidden="true">
-            ⚠
+            {'\u26A0'}
           </span>
           <span>
             <strong>{urgentTickets.length}</strong> urgent ticket
-            {urgentTickets.length !== 1 ? 's' : ''} · High / Critical
+            {urgentTickets.length !== 1 ? 's' : ''} {'\u00B7'} High / Critical
           </span>
         </div>
         {onFilterUrgent && (
@@ -103,21 +118,35 @@ function UrgentStrip({ tickets, onFilterUrgent }) {
         )}
       </div>
       <div className="urgent-strip__list">
-        {preview.map((ticket) => (
+        {pageItems.map((ticket) => (
           <div key={ticket.id} className="urgent-strip__item">
-            <span className="urgent-strip__item-title">{ticket.title}</span>
+            <div className="urgent-strip__item-content">
+              <div className="urgent-strip__item-header">
+                <span className="urgent-strip__item-id">#{ticket.id}</span>
+                <span className="urgent-strip__item-date">{formatDate(ticket.created)}</span>
+              </div>
+              <span className="urgent-strip__item-title">{ticket.title}</span>
+            </div>
             <div className="urgent-strip__item-meta">
               <Badge type={statusClass(ticket.status)} value={ticket.status} />
               <Badge type={priorityClass(ticket.priority)} value={ticket.priority} />
             </div>
           </div>
         ))}
-        {urgentTickets.length > preview.length && (
-          <p className="urgent-strip__more">
-            +{urgentTickets.length - preview.length} more urgent ticket
-            {urgentTickets.length - preview.length !== 1 ? 's' : ''}
-          </p>
-        )}
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          totalItems={totalItems}
+          pageSize={pageSize}
+          onPageChange={goToPage}
+          hasPrev={hasPrev}
+          hasNext={hasNext}
+          onPrev={goPrev}
+          onNext={goNext}
+          compact
+          itemLabel="urgent tickets"
+          ariaLabel="Urgent tickets pagination"
+        />
       </div>
     </div>
   );
@@ -238,7 +267,7 @@ function StatusColumn({ status, tickets }) {
     goPrev,
     hasPrev,
     hasNext,
-  } = usePagination(tickets, TICKETS_PER_PAGE);
+  } = usePagination(tickets, STATUS_BOARD_PER_PAGE);
 
   return (
     <div className="status-column">

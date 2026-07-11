@@ -1,0 +1,10 @@
+.filters__clear--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.filters__clear--active:hover {
+  background: #c9683f;
+  border-color: #c9683f;
+}

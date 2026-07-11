@@ -1,0 +1,34 @@
+.urgent-strip__item {
+  align-items: flex-start;
+}
+
+.urgent-strip__item-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.urgent-strip__item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.2rem;
+}
+
+.urgent-strip__item-id {
+  color: var(--accent-coral);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.urgent-strip__item-date {
+  color: var(--text-muted);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.urgent-strip__item-title {
+  display: block;
+  line-height: 1.35;
+}
