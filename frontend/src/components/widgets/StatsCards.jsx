@@ -11,12 +11,13 @@ export function StatsCards({ tickets }) {
 
   const stats = [
     {
-      label: 'High / Critical',
+      label: 'Urgent · High / Critical',
       value: highPriority,
       className: 'high',
-      urgent: highPriority > 0,
-      pill: highPriority > 0 ? 'Urgent case' : 'Clear',
-      pillType: highPriority > 0 ? 'urgent' : 'healthy',
+      urgent: true,
+      urgentActive: highPriority > 0,
+      pill: highPriority > 0 ? 'Needs attention' : 'All clear',
+      pillType: highPriority > 0 ? 'urgent' : 'urgent-clear',
       wide: true,
     },
     { label: 'Open', value: open, className: 'open', pill: 'Active', pillType: 'healthy' },
@@ -32,7 +33,9 @@ export function StatsCards({ tickets }) {
           key={stat.label}
           className={`stat-card stat-card--kpi stat-card--${stat.className}${
             stat.wide ? ' stat-card--wide' : ''
-          }${stat.urgent ? ' stat-card--urgent' : ''}`}
+          }${stat.urgent ? ' stat-card--urgent' : ''}${
+            stat.urgentActive ? ' stat-card--urgent-active' : ''
+          }`}
         >
           <div className="stat-card__top">
             <span className="stat-card__label">
@@ -47,7 +50,9 @@ export function StatsCards({ tickets }) {
               {stat.pill}
             </span>
           </div>
-          <div className="stat-card__value">{stat.value}</div>
+          <div className={`stat-card__value${stat.urgent ? ' stat-card__value--urgent' : ''}`}>
+            {stat.value}
+          </div>
         </div>
       ))}
     </div>
