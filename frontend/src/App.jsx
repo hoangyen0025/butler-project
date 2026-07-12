@@ -11,7 +11,7 @@ import {
   TicketTable,
   StatusBoard,
   CategoryBreakdown,
-} from './components/Widgets';
+} from './components/widgets';
 import { useTickets, useMeta } from './hooks/useTickets';
 import { useDashboardLayout } from './hooks/useDashboardLayout';
 
