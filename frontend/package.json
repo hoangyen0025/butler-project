@@ -1,5 +1,5 @@
 {
-  "name": "butler-maintenance-dashboard",
+  "name": "butler-maintenance-dashboard-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
