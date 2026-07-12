@@ -1,3 +1,5 @@
+import './StatsCards.css';
+
 export function StatsCards({ tickets }) {
   const open = tickets.filter((t) => t.status === 'Open').length;
   const inProgress = tickets.filter((t) => t.status === 'In Progress').length;
@@ -12,8 +14,9 @@ export function StatsCards({ tickets }) {
       label: 'High / Critical',
       value: highPriority,
       className: 'high',
-      pill: highPriority > 0 ? 'Alert' : 'Healthy',
-      pillType: highPriority > 0 ? 'alert' : 'healthy',
+      urgent: highPriority > 0,
+      pill: highPriority > 0 ? 'Urgent case' : 'Clear',
+      pillType: highPriority > 0 ? 'urgent' : 'healthy',
       wide: true,
     },
     { label: 'Open', value: open, className: 'open', pill: 'Active', pillType: 'healthy' },
@@ -29,10 +32,17 @@ export function StatsCards({ tickets }) {
           key={stat.label}
           className={`stat-card stat-card--kpi stat-card--${stat.className}${
             stat.wide ? ' stat-card--wide' : ''
-          }`}
+          }${stat.urgent ? ' stat-card--urgent' : ''}`}
         >
           <div className="stat-card__top">
-            <span className="stat-card__label">{stat.label}</span>
+            <span className="stat-card__label">
+              {stat.urgent && (
+                <span className="stat-card__urgent-icon" aria-hidden="true">
+                  {'\u26A0'}
+                </span>
+              )}
+              {stat.label}
+            </span>
             <span className={`stat-card__pill stat-card__pill--${stat.pillType}`}>
               {stat.pill}
             </span>

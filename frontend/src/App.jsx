@@ -51,18 +51,6 @@ function App() {
 
   const clearFilters = () => setFilters(EMPTY_FILTERS);
 
-  const toggleUrgentFilter = () => {
-    const urgentPriorities = ['High', 'Critical'];
-    const isActive =
-      filters.priority.length === urgentPriorities.length &&
-      urgentPriorities.every((p) => filters.priority.includes(p));
-
-    setFilters((prev) => ({
-      ...prev,
-      priority: isActive ? [] : [...urgentPriorities],
-    }));
-  };
-
   const activeCases = useMemo(
     () => tickets.filter((t) => t.status !== 'Closed').length,
     [tickets]
@@ -71,7 +59,6 @@ function App() {
   const widgetContext = {
     hasActiveFilters,
     onClearFilters: clearFilters,
-    onFilterUrgent: toggleUrgentFilter,
   };
 
   const renderWidget = (id) => {
@@ -81,12 +68,7 @@ function App() {
       case 'table':
         return <TicketTable tickets={tickets} {...widgetContext} />;
       case 'board':
-        return (
-          <StatusBoard
-            tickets={boardTickets}
-            {...widgetContext}
-          />
-        );
+        return <StatusBoard tickets={boardTickets} />;
       case 'categories':
         return <CategoryBreakdown tickets={tickets} {...widgetContext} />;
       default:

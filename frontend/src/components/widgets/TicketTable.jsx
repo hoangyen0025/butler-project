@@ -39,7 +39,9 @@ export function TicketTable({ tickets }) {
           {pageItems.map((ticket) => (
             <tr key={ticket.id}>
               <td className="ticket-table__id">#{ticket.id}</td>
-              <td className="ticket-table__title">{ticket.title}</td>
+              <td className="ticket-table__title" title={ticket.title}>
+                {ticket.title}
+              </td>
               <td>
                 <Badge type={statusClass(ticket.status)} value={ticket.status} />
               </td>

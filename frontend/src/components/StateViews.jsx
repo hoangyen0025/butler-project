@@ -60,7 +60,7 @@ export function CategorySkeleton({ compact = false }) {
   if (compact) {
     return (
       <div className="category-chart category-chart--compact">
-        <div className="category-donut" style={{ width: 136, height: 136, margin: '0 auto' }}>
+        <div className="category-donut" style={{ width: 168, height: 168, margin: '0 auto' }}>
           <Skeleton style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
         </div>
         <div className="category-chart-skeleton__legend">

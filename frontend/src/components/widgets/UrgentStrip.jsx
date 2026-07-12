@@ -6,7 +6,7 @@ import '../UrgentStrip.css';
 
 const URGENT_PER_PAGE = 5;
 
-export function UrgentStrip({ tickets, onFilterUrgent }) {
+export function UrgentStrip({ tickets }) {
   const urgentTickets = useMemo(
     () =>
       [...tickets.filter(isActiveUrgent)].sort(
@@ -43,11 +43,6 @@ export function UrgentStrip({ tickets, onFilterUrgent }) {
             {urgentTickets.length !== 1 ? 's' : ''} {'\u00B7'} High / Critical
           </span>
         </div>
-        {onFilterUrgent && (
-          <button type="button" className="urgent-strip__action" onClick={onFilterUrgent}>
-            Filter urgent
-          </button>
-        )}
       </div>
       <div className="urgent-strip__list">
         {pageItems.map((ticket) => (

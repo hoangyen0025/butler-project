@@ -1,7 +1,7 @@
 import { StatusColumn } from './StatusColumn';
 import { UrgentStrip } from './UrgentStrip';
 
-export function StatusBoard({ tickets, onFilterUrgent }) {
+export function StatusBoard({ tickets }) {
   const statuses = ['Open', 'In Progress', 'On Hold', 'Closed'];
 
   const grouped = statuses.reduce((acc, status) => {
@@ -11,7 +11,7 @@ export function StatusBoard({ tickets, onFilterUrgent }) {
 
   return (
     <div className="status-board-wrap">
-      <UrgentStrip tickets={tickets} onFilterUrgent={onFilterUrgent} />
+      <UrgentStrip tickets={tickets} />
       <div className="status-board">
         {statuses.map((status) => (
           <StatusColumn key={status} status={status} tickets={grouped[status]} />

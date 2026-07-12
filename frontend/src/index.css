@@ -790,7 +790,6 @@ input {
   font-size: 0.9rem;
   color: var(--text);
   line-height: 1.4;
-  min-width: 200px;
 }
 
 .ticket-table__id {
@@ -1056,8 +1055,49 @@ tr:hover td {
 .category-donut {
   position: relative;
   flex-shrink: 0;
-  width: 148px;
-  height: 148px;
+}
+
+.category-donut__tooltip {
+  position: absolute;
+  top: -0.35rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 6px;
+  background: var(--surface-elevated, #2a2f38);
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.category-donut__tooltip-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.category-donut__tooltip-pct {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--accent-coral, #e07a4f);
+}
+
+.category-donut__segment {
+  cursor: pointer;
+}
+
+.category-donut__hit {
+  pointer-events: stroke;
+}
+
+.category-donut__arc {
+  pointer-events: none;
+  transition: stroke-opacity 0.15s ease, stroke-width 0.15s ease;
 }
 
 .category-donut__svg {
@@ -1168,8 +1208,9 @@ tr:hover td {
 }
 
 .category-chart-skeleton__donut {
-  width: 148px;
-  height: 148px;
+  width: clamp(180px, 20vw, 220px);
+  max-width: 100%;
+  aspect-ratio: 1;
   border-radius: 50%;
 }
 
