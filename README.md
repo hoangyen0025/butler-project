@@ -57,9 +57,11 @@ Password for all demo accounts: `demo123`
 
 - Fixed filter bar at the top of the staff dashboard (applies to widgets below)
 - **Server-side pagination** (`page` / `limit` query params) on tables, status board columns, urgent strip, and contractor jobs
+- Natural-language search (`/search`) with optional AI parse
 - Loading skeletons, empty states, and error handling with retry
 - Widget nav for jumping between dashboard sections
 - Responsive layout
+- **Unit tests** for core backend helpers and frontend utils (see below)
 
 ## Tech Stack
 
@@ -68,6 +70,7 @@ Password for all demo accounts: `demo123`
 | Frontend | React 18, Vite, React Router, @dnd-kit, Leaflet, jsPDF + html2canvas |
 | Backend | Node.js, Express |
 | Data | JSON file (`backend/data/tickets.json`) |
+| Tests | Node.js built-in test runner (`node --test`), Vitest |
 
 ## Prerequisites
 
@@ -115,6 +118,8 @@ Optional: set `OPENAI_API_KEY` in `backend/.env` for AI suggest-reply / summary 
 |------|-------------|
 | `/` | Staff dashboard |
 | `/ticket/:id` | Staff ticket detail |
+| `/tickets/:id` | Alias for staff ticket detail |
+| `/recent-ticket/all` | Full recent-tickets list (respects dashboard filters) |
 | `/search` | Search results |
 | `/contractor` | Contractor login |
 | `/contractor/jobs` | Contractor job list |
@@ -154,29 +159,35 @@ butler project/
 ├── backend/
 │   ├── data/tickets.json
 │   └── src/
-│       ├── server.js              # App entry (middleware + mount routes)
-│       ├── ticketsStore.js        # Load/save tickets + shared helpers
-│       ├── contractorAuth.js      # Demo logins + session tokens
+│       ├── server.js                 # App entry (middleware + mount routes)
+│       ├── ticketsStore.js           # Load/save tickets + shared helpers
+│       ├── ticketsStore.test.js
+│       ├── contractorAuth.js         # Demo logins + session tokens
+│       ├── contractorAuth.test.js
 │       ├── routes/
-│       │   ├── contractor.js      # /api/contractor/*
-│       │   └── api.js             # /api/tickets, meta, search
+│       │   ├── contractor.js         # /api/contractor/*
+│       │   └── api.js                # /api/tickets, meta, search
 │       ├── parseSearchQuery.js
 │       ├── suggestReply.js
 │       └── summarizeTicket.js
 ├── frontend/
 │   └── src/
 │       ├── App.jsx
-│       ├── pages/                 # Dashboard routes + contractor pages
-│       ├── hooks/
+│       ├── pages/                    # Staff + contractor pages
+│       ├── hooks/                    # useTickets, useContractor, layout
 │       ├── components/
 │       │   ├── TicketChat.jsx
 │       │   ├── TicketAttachments.jsx
 │       │   ├── TicketActionsPanel.jsx
 │       │   ├── ContractorQuoteForm.jsx
-│       │   ├── TicketDetail.css   # Ticket detail / print / quotes styles
+│       │   ├── TicketDetail.css
 │       │   └── widgets/
-│       └── utils/
-├── package.json
+│       ├── utils/
+│       │   ├── filterParams.js
+│       │   ├── categoryAnalytics.js
+│       │   └── *.test.js             # Vitest unit tests
+│       └── utils.test.js
+├── package.json                      # Root scripts (install, dev, test, build)
 └── README.md
 ```
 
@@ -190,6 +201,29 @@ butler project/
 - **JSON data source** — Simple to run for reviewers; no database setup required.
 - **Persistent staff layout** — Widget order/visibility saved in `localStorage`.
 - **Contractor sessions** — Opaque tokens in memory (8h TTL) with credentials stored in the browser tab via `sessionStorage`.
+- **Tested helpers** — Auth, pagination/filter helpers, and frontend utils have unit coverage without needing a browser or live server.
+
+## Unit tests
+
+From the project root (after `npm run install:all`):
+
+```bash
+npm test
+```
+
+Or separately:
+
+```bash
+npm run test:backend
+npm run test:frontend
+```
+
+| Area | Runner | Covers |
+|------|--------|--------|
+| Backend | `node --test` | Contractor auth (login/session), ticket helpers (filters, pagination, neighbors) |
+| Frontend | Vitest | Urgent/SLA helpers, URL filter params, category analytics |
+
+Expect about **24** passing tests (`11` backend + `13` frontend).
 
 ## Production Build
 
