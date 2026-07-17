@@ -1,13 +1,23 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
+import { useTickets } from '../../hooks/useTickets';
 import './CategoryExtraCharts.css';
+
+const ALL_TICKETS_FILTERS = {
+  status: [],
+  category: [],
+  priority: [],
+  search: '',
+};
 
 function formatHkd(n) {
   return `HKD ${Math.round(Number(n) || 0).toLocaleString('en-HK')}`;
 }
 
-/** Pending vendor part quotes across the current filtered ticket set. */
-export function PendingQuotes({ tickets }) {
+/** All pending vendor part quotes across the whole ticket set. */
+export function PendingQuotes() {
+  const { tickets, loading } = useTickets(ALL_TICKETS_FILTERS);
+
   const rows = useMemo(() => {
     const items = [];
     for (const ticket of tickets || []) {
@@ -22,19 +32,9 @@ export function PendingQuotes({ tickets }) {
         });
       }
     }
-    return items
-      .sort((a, b) => String(b.requestedAt || '').localeCompare(String(a.requestedAt || '')))
-      .slice(0, 8);
-  }, [tickets]);
-
-  const totalPending = useMemo(() => {
-    let n = 0;
-    for (const ticket of tickets || []) {
-      for (const quote of ticket.quoteRequests || []) {
-        if (quote.status === 'pending') n += 1;
-      }
-    }
-    return n;
+    return items.sort((a, b) =>
+      String(b.requestedAt || '').localeCompare(String(a.requestedAt || ''))
+    );
   }, [tickets]);
 
   return (
@@ -44,13 +44,15 @@ export function PendingQuotes({ tickets }) {
           <h4 className="cat-chart__title">Pending part quotes</h4>
           <p className="cat-chart__subtitle">
             Vendor requests awaiting staff approval
-            {totalPending > 0 ? ` · ${totalPending} open` : ''}
+            {rows.length > 0 ? ` · ${rows.length} open` : ''}
           </p>
         </div>
       </div>
 
-      {rows.length === 0 ? (
-        <div className="empty-state">No pending part quotes in this filter.</div>
+      {loading && rows.length === 0 ? (
+        <div className="empty-state">Loading pending quotes…</div>
+      ) : rows.length === 0 ? (
+        <div className="empty-state">No pending part quotes.</div>
       ) : (
         <ul className="pending-quotes" role="list">
           {rows.map((row) => (

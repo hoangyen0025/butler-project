@@ -11,7 +11,6 @@ import { CategoryFloorStrip } from './CategoryFloorStrip';
 import { CategoryWeekSparklines } from './CategoryWeekSparklines';
 import { CategoryAssigneeLoad } from './CategoryAssigneeLoad';
 import { CategoryAgingBuckets } from './CategoryAgingBuckets';
-import { PendingQuotes } from './PendingQuotes';
 import { buildCategoryStats } from '../../utils/categoryAnalytics';
 
 export function CategoryBreakdown({ tickets, compact = false }) {
@@ -129,9 +128,6 @@ export function CategoryBreakdown({ tickets, compact = false }) {
             <CategoryTreemap stats={stats} />
             <CategoryButterfly stats={stats} />
             <CategoryPriorityHeatmap tickets={tickets} />
-          </div>
-          <div className="category-extra-charts__wide category-extra-charts__quotes">
-            <PendingQuotes tickets={tickets} />
           </div>
           <TicketLocationMap tickets={tickets} />
         </>

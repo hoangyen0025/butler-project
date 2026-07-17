@@ -17,6 +17,7 @@ const {
   paginateTickets,
   logFilterRequest,
   findRelatedTickets,
+  getNeighborIds,
 } = require('../ticketsStore');
 
 const router = express.Router();

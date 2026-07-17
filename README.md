@@ -17,7 +17,7 @@ A maintenance ticket dashboard built for the Butler Asia technical assessment. P
 |--------|-------------|
 | **Key Metrics** | Counts by status (Open, In Progress, Closed, On Hold) plus urgent High/Critical; click a card to jump to that section on the Status Board |
 | **Recent Tickets** | Paginated table with status and priority badges |
-| **Status Board** | Kanban-style columns by status, plus an urgent strip for active High/Critical tickets |
+| **Status Board** | Kanban columns by status, urgent strip for High/Critical tickets, and **all pending part quotes** listed below the board (site-wide, independent of dashboard filters) |
 | **Ticket Analytics** | Chart grid (donut, floor, stacked, aging, trends, assignee, treemap, butterfly, heatmap) plus location map |
 
 ### Ticket detail (staff)
@@ -181,7 +181,7 @@ butler project/
 │       │   ├── TicketActionsPanel.jsx
 │       │   ├── ContractorQuoteForm.jsx
 │       │   ├── TicketDetail.css
-│       │   └── widgets/
+│       │   └── widgets/              # Stats, table, StatusBoard (+ PendingQuotes), analytics
 │       ├── utils/
 │       │   ├── filterParams.js
 │       │   ├── categoryAnalytics.js
@@ -196,6 +196,7 @@ butler project/
 - **Property manager persona** — Staff UI prioritizes urgent cases, status counts, and analytics for building operations.
 - **Contractor persona** — Vendors see only their assigned jobs, with site-first layout (description + status, evidence, quotes, chat).
 - **Urgent visibility** — High/Critical tickets are highlighted in Key Metrics and the urgent strip; metric cards deep-link into the Status Board.
+- **Pending quotes on the board** — All vendor part quotes with status `pending` appear under the Status Board so staff can review them without digging through analytics or filters.
 - **Server-side filtering & pagination** — Keeps list logic in the API and demonstrates REST query design.
 - **Activity as source of truth** — Status changes, chat notes, uploads, and quotes append to `ticket.activity` on the backend; the UI reads that payload.
 - **JSON data source** — Simple to run for reviewers; no database setup required.

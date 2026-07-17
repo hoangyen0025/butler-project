@@ -23873,7 +23873,7 @@
   {
     "id": 174,
     "title": "Meter reading odd on Loading Bay",
-    "status": "Closed",
+    "status": "On Hold",
     "category": "Plumbing",
     "priority": "Critical",
     "created": "2026-06-27",
@@ -23881,7 +23881,7 @@
     "location": "Tenant unit · Car Park · Guard booth",
     "reporter": "Reception",
     "assignee": "City Plumb",
-    "updated": "2026-07-15",
+    "updated": "2026-07-17",
     "dueDate": "2026-06-28",
     "assetId": "PRV-19",
     "floor": "Car Park",
@@ -23949,6 +23949,26 @@
         "type": "note",
         "actor": "Dashboard User",
         "text": "hihi"
+      },
+      {
+        "at": "2026-07-17T13:19:16.189Z",
+        "type": "status",
+        "actor": "Dashboard User",
+        "text": "Status changed to On Hold",
+        "from": "Closed",
+        "to": "On Hold"
+      },
+      {
+        "at": "2026-07-17T13:20:57.363Z",
+        "type": "message",
+        "actor": "City Plumb",
+        "text": "Uploaded photo evidence: Lotus-Silver-Beads-Valkyrie-Gems-Beds-2 (2).png"
+      },
+      {
+        "at": "2026-07-17T13:20:59.295Z",
+        "type": "message",
+        "actor": "City Plumb",
+        "text": "Removed photo evidence: Lotus-Silver-Beads-Valkyrie-Gems-Beds-2 (2).png"
       }
     ],
     "attachments": [

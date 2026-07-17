@@ -1069,6 +1069,10 @@ tr:hover td {
   gap: 1rem;
 }
 
+.status-board__quotes {
+  margin-top: 0.25rem;
+}
+
 .status-board {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
