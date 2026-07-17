@@ -19,7 +19,7 @@
   width: auto;
 }
 
-.dashboard-top .filters__clear {
+.dashboard-top .filters__actions {
   margin-top: 1.35rem;
   align-self: flex-start;
 }
@@ -35,9 +35,14 @@
     width: 100%;
   }
 
-  .dashboard-top .filters__clear {
+  .dashboard-top .filters__actions {
     margin-top: 0;
+    margin-left: 0;
     align-self: stretch;
+  }
+
+  .dashboard-top .filters__clear {
+    flex: 1;
   }
 }
 

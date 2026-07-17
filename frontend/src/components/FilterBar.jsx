@@ -5,20 +5,31 @@ export const EMPTY_FILTERS = {
   status: [],
   category: [],
   priority: [],
+  search: '',
 };
 
-export function FilterBar({ filters, onChange, meta, resultCount, loading = false }) {
+export function FilterBar({
+  filters,
+  onChange,
+  meta,
+  resultCount,
+  loading = false,
+  showCategory = true,
+}) {
   const updateFilter = (field) => (values) => {
     onChange({ ...filters, [field]: values });
   };
 
   const clearFilters = () => {
-    onChange(EMPTY_FILTERS);
+    onChange({
+      ...EMPTY_FILTERS,
+      ...(showCategory ? {} : { category: [] }),
+    });
   };
 
   const hasFilters =
     filters.status.length > 0 ||
-    filters.category.length > 0 ||
+    (showCategory && filters.category.length > 0) ||
     filters.priority.length > 0;
 
   return (
@@ -33,14 +44,16 @@ export function FilterBar({ filters, onChange, meta, resultCount, loading = fals
           onChange={updateFilter('status')}
         />
 
-        <MultiSelectFilter
-          label="Category"
-          placeholder="All categories"
-          hint="Select one or more category"
-          options={meta.categories}
-          selected={filters.category}
-          onChange={updateFilter('category')}
-        />
+        {showCategory && (
+          <MultiSelectFilter
+            label="Category"
+            placeholder="All categories"
+            hint="Select one or more category"
+            options={meta.categories}
+            selected={filters.category}
+            onChange={updateFilter('category')}
+          />
+        )}
 
         <MultiSelectFilter
           label="Priority"
@@ -51,15 +64,17 @@ export function FilterBar({ filters, onChange, meta, resultCount, loading = fals
           onChange={updateFilter('priority')}
         />
 
-        <button
-          type="button"
-          className={`btn btn--outline filters__clear${hasFilters ? ' filters__clear--active' : ''}`}
-          onClick={clearFilters}
-          disabled={!hasFilters}
-          title="Clear all filters"
-        >
-          Clear filters
-        </button>
+        <div className="filters__actions">
+          <button
+            type="button"
+            className={`btn btn--outline filters__clear${hasFilters ? ' filters__clear--active' : ''}`}
+            onClick={clearFilters}
+            disabled={!hasFilters}
+            title="Clear all filters"
+          >
+            Clear filters
+          </button>
+        </div>
       </div>
 
       <div className="filters__count">

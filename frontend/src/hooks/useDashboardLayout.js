@@ -20,8 +20,8 @@ export const WIDGET_DEFINITIONS = [
   },
   {
     id: 'categories',
-    title: 'Category Breakdown',
-    description: 'Distribution by maintenance category',
+    title: 'Ticket Analytics',
+    description: 'Charts and insights across categories, floors, and SLA',
   },
 ];
 

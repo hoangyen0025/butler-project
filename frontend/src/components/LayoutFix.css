@@ -21,7 +21,7 @@ body {
 .ticket-table__col-title,
 .ticket-table__title {
   min-width: 0;
-  width: 38%;
+  width: 28%;
   padding-left: 0.35rem;
   padding-right: 0.5rem;
   white-space: nowrap;
@@ -29,23 +29,34 @@ body {
   text-overflow: ellipsis;
 }
 
-.ticket-table th:nth-child(3),
-.ticket-table td:nth-child(3) {
-  width: 7rem;
+.ticket-table__col-location,
+.ticket-table__location {
+  min-width: 0;
+  width: 18%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text-muted);
+  font-size: 0.85rem;
 }
 
 .ticket-table th:nth-child(4),
 .ticket-table td:nth-child(4) {
-  width: 6.5rem;
+  width: 7rem;
 }
 
 .ticket-table th:nth-child(5),
 .ticket-table td:nth-child(5) {
-  width: 5.5rem;
+  width: 6.5rem;
 }
 
 .ticket-table th:nth-child(6),
 .ticket-table td:nth-child(6) {
+  width: 5.5rem;
+}
+
+.ticket-table th:nth-child(7),
+.ticket-table td:nth-child(7) {
   width: 5.5rem;
 }
 

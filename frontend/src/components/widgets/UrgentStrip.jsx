@@ -1,33 +1,55 @@
 import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { Badge } from '../Badge';
-import { usePagination, Pagination } from '../Pagination';
-import { statusClass, priorityClass, formatDate, isActiveUrgent } from '../../utils';
+import { Pagination } from '../Pagination';
+import { usePagedTickets } from '../../hooks/useTickets';
+import { statusClass, priorityClass, formatDate } from '../../utils';
 import '../UrgentStrip.css';
 
 const URGENT_PER_PAGE = 5;
+const ACTIVE_STATUSES = ['Open', 'In Progress', 'On Hold'];
+const URGENT_PRIORITIES = ['High', 'Critical'];
 
-export function UrgentStrip({ tickets }) {
-  const urgentTickets = useMemo(
-    () =>
-      [...tickets.filter(isActiveUrgent)].sort(
-        (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
-      ),
-    [tickets]
-  );
+export function UrgentStrip({ filters }) {
+  const urgentFilters = useMemo(() => {
+    const status =
+      filters.status.length > 0
+        ? filters.status.filter((s) => s !== 'Closed')
+        : ACTIVE_STATUSES;
+
+    return {
+      status,
+      category: filters.category,
+      priority: URGENT_PRIORITIES,
+      search: '',
+    };
+  }, [filters]);
+
   const {
-    page,
-    pageItems,
-    totalPages,
+    tickets,
     totalItems,
+    totalPages,
     pageSize,
+    page,
+    loading,
     goToPage,
     goNext,
     goPrev,
     hasPrev,
     hasNext,
-  } = usePagination(urgentTickets, URGENT_PER_PAGE);
+  } = usePagedTickets(urgentFilters, URGENT_PER_PAGE, {
+    enabled: urgentFilters.status.length > 0,
+  });
 
-  if (urgentTickets.length === 0) {
+  if (urgentFilters.status.length === 0) {
+    return null;
+  }
+
+  if (loading && tickets.length === 0) {
+    return null;
+  }
+
+  if (!loading && totalItems === 0) {
     return null;
   }
 
@@ -39,14 +61,18 @@ export function UrgentStrip({ tickets }) {
             {'\u26A0'}
           </span>
           <span>
-            <strong>{urgentTickets.length}</strong> urgent ticket
-            {urgentTickets.length !== 1 ? 's' : ''} {'\u00B7'} High / Critical
+            <strong>{totalItems}</strong> urgent ticket
+            {totalItems !== 1 ? 's' : ''} {'\u00B7'} High / Critical
           </span>
         </div>
       </div>
       <div className="urgent-strip__list">
-        {pageItems.map((ticket) => (
-          <div key={ticket.id} className="urgent-strip__item">
+        {tickets.map((ticket) => (
+          <Link
+            key={ticket.id}
+            to={`/ticket/${ticket.id}`}
+            className="urgent-strip__item urgent-strip__item--link"
+          >
             <div className="urgent-strip__item-content">
               <div className="urgent-strip__item-header">
                 <span className="urgent-strip__item-id">#{ticket.id}</span>
@@ -58,7 +84,7 @@ export function UrgentStrip({ tickets }) {
               <Badge type={statusClass(ticket.status)} value={ticket.status} />
               <Badge type={priorityClass(ticket.priority)} value={ticket.priority} />
             </div>
-          </div>
+          </Link>
         ))}
         <Pagination
           page={page}

@@ -1,38 +1,63 @@
+import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { Badge } from '../Badge';
-import { usePagination, Pagination } from '../Pagination';
+import { Pagination } from '../Pagination';
+import { usePagedTickets } from '../../hooks/useTickets';
 import { statusClass, priorityClass, formatDate } from '../../utils';
 
 const STATUS_BOARD_PER_PAGE = 5;
 
-export function StatusColumn({ status, tickets }) {
+export function StatusColumn({ status, filters }) {
+  const columnFilters = useMemo(() => {
+    const allowedStatuses =
+      filters.status.length > 0
+        ? filters.status.filter((s) => s === status)
+        : [status];
+
+    return {
+      status: allowedStatuses,
+      category: filters.category,
+      priority: filters.priority,
+      search: '',
+    };
+  }, [filters, status]);
+
+  const enabled = columnFilters.status.length > 0;
+
   const {
-    page,
-    pageItems,
-    totalPages,
+    tickets,
     totalItems,
+    totalPages,
     pageSize,
+    page,
     goToPage,
     goNext,
     goPrev,
     hasPrev,
     hasNext,
-  } = usePagination(tickets, STATUS_BOARD_PER_PAGE);
+  } = usePagedTickets(columnFilters, STATUS_BOARD_PER_PAGE, { enabled });
+
+  const count = enabled ? totalItems : 0;
 
   return (
-    <div className="status-column">
+    <div className="status-column" id={`status-column-${status.replace(/\s+/g, '-')}`}>
       <div className={`status-column__header status-column__header--${statusClass(status)}`}>
         <span>{status}</span>
-        <span className="status-column__count">{tickets.length}</span>
+        <span className="status-column__count">{count}</span>
       </div>
       <div className="status-column__cards">
-        {tickets.length === 0 ? (
+        {count === 0 ? (
           <div className="empty-state" style={{ padding: '1rem' }}>
             No tickets
           </div>
         ) : (
           <>
-            {pageItems.map((ticket) => (
-              <div key={ticket.id} className="ticket-card">
+            {tickets.map((ticket) => (
+              <Link
+                key={ticket.id}
+                to={`/ticket/${ticket.id}`}
+                className="ticket-card ticket-card--link"
+              >
                 <div className="ticket-card__header">
                   <span className="ticket-card__id">#{ticket.id}</span>
                   <span className="ticket-card__date">{formatDate(ticket.created)}</span>
@@ -42,7 +67,7 @@ export function StatusColumn({ status, tickets }) {
                   <Badge type={priorityClass(ticket.priority)} value={ticket.priority} />
                   <Badge type="low" value={ticket.category} />
                 </div>
-              </div>
+              </Link>
             ))}
             <Pagination
               page={page}

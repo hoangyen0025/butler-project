@@ -1,0 +1,39 @@
+.widget-nav {
+  border-bottom: 1px solid var(--border);
+  background: rgba(11, 13, 16, 0.92);
+  backdrop-filter: blur(10px);
+}
+
+.widget-nav__inner {
+  display: flex;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding: 0.55rem 1.5rem 0.65rem;
+  scrollbar-width: thin;
+}
+
+.widget-nav__item {
+  flex: 0 0 auto;
+  border: 1px solid var(--border);
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.widget-nav__item:hover {
+  color: var(--text);
+  border-color: #3a4049;
+  background: var(--surface-hover);
+}
+
+.widget-nav__item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}

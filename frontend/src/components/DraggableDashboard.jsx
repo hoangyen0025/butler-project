@@ -41,6 +41,7 @@ function SortableDashboardWidget({ id, title, children }) {
     <div
       ref={setNodeRef}
       style={style}
+      id={`widget-${id}`}
       className={`widget${collapsed ? ' widget--collapsed' : ''}${
         isDragging ? ' widget--dragging' : ''
       }`}

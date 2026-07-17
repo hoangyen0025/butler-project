@@ -1,9 +1,11 @@
+import { Route, Routes } from 'react-router-dom';
 import { useState, useMemo } from 'react';
 import { Header } from './components/Header';
 import { FilterBar, EMPTY_FILTERS } from './components/FilterBar';
 import { DraggableDashboard } from './components/DraggableDashboard';
 import { DashboardCustomizer } from './components/DashboardCustomizer';
 import { DashboardLoadingSkeleton, ErrorState } from './components/StateViews';
+import { WidgetNav } from './components/WidgetNav';
 import './components/DashboardTop.css';
 import './components/LayoutFix.css';
 import {
@@ -14,26 +16,29 @@ import {
 } from './components/widgets';
 import { useTickets, useMeta } from './hooks/useTickets';
 import { useDashboardLayout } from './hooks/useDashboardLayout';
+import { TicketDetail } from './pages/TicketDetail';
+import { SearchResults } from './pages/SearchResults';
+import { RecentTicketsAll } from './pages/RecentTicketsAll';
+import { ContractorPortal } from './pages/ContractorPortal';
+import { ContractorJobs } from './pages/ContractorJobs';
+import { ContractorJobDetail } from './pages/ContractorJobDetail';
 
-function App() {
-  const [filters, setFilters] = useState({
-    status: [],
-    category: [],
-    priority: [],
-  });
+function Dashboard() {
+  const [filters, setFilters] = useState(EMPTY_FILTERS);
   const [showCustomizer, setShowCustomizer] = useState(false);
 
-  const { tickets, loading, error, refetch } = useTickets(filters);
+  const { tickets, pagination, loading, error, refetch } = useTickets(filters);
 
+  // Status board ignores priority so columns stay filled while the table is priority-filtered.
   const boardFilters = useMemo(
     () => ({
       status: filters.status,
       category: filters.category,
       priority: [],
+      search: '',
     }),
     [filters.status, filters.category]
   );
-  const { tickets: boardTickets } = useTickets(boardFilters, { silent: true });
   const { meta } = useMeta();
   const {
     layout,
@@ -66,9 +71,9 @@ function App() {
       case 'stats':
         return <StatsCards tickets={tickets} />;
       case 'table':
-        return <TicketTable tickets={tickets} {...widgetContext} />;
+        return <TicketTable filters={filters} {...widgetContext} />;
       case 'board':
-        return <StatusBoard tickets={boardTickets} />;
+        return <StatusBoard filters={boardFilters} />;
       case 'categories':
         return <CategoryBreakdown tickets={tickets} {...widgetContext} />;
       default:
@@ -78,11 +83,14 @@ function App() {
 
   return (
     <div className="app">
-      <Header
-        onCustomize={() => setShowCustomizer(true)}
-        activeCases={activeCases}
-        totalTickets={tickets.length}
-      />
+      <div className="app-chrome">
+        <Header
+          onCustomize={() => setShowCustomizer(true)}
+          activeCases={activeCases}
+          totalTickets={pagination.total}
+        />
+        {!loading && !error && <WidgetNav widgetIds={visibleWidgets} />}
+      </div>
 
       <main className="main">
         <section className="dashboard-top" aria-label="Filters">
@@ -90,7 +98,7 @@ function App() {
             filters={filters}
             onChange={setFilters}
             meta={meta}
-            resultCount={tickets.length}
+            resultCount={pagination.total}
             loading={loading}
           />
         </section>
@@ -122,6 +130,21 @@ function App() {
         />
       )}
     </div>
+  );
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Dashboard />} />
+      <Route path="/search" element={<SearchResults />} />
+      <Route path="/recent-ticket/all" element={<RecentTicketsAll />} />
+      <Route path="/contractor" element={<ContractorPortal />} />
+      <Route path="/contractor/jobs" element={<ContractorJobs />} />
+      <Route path="/contractor/jobs/:id" element={<ContractorJobDetail />} />
+      <Route path="/ticket/:id" element={<TicketDetail />} />
+      <Route path="/tickets/:id" element={<TicketDetail />} />
+    </Routes>
   );
 }
 

@@ -1,6 +1,6 @@
 # Butler Maintenance Dashboard
 
-A maintenance ticket dashboard built for the Butler Asia technical assessment. Property managers can view, filter, and customize their building maintenance overview at a glance.
+A maintenance ticket dashboard built for the Butler Asia technical assessment. Property managers can view, filter, and customize their building maintenance overview; vendors use a contractor portal to work assigned jobs on site.
 
 ## Features
 
@@ -8,33 +8,66 @@ A maintenance ticket dashboard built for the Butler Asia technical assessment. P
 
 - **Ticket list** — 80 realistic maintenance tickets served from a JSON data source via a Node.js API
 - **Multi-select filtering** — Filter by status, category, and priority; filters are combinable (AND across types, OR within each type)
-- **Customizable dashboard** — Toggle widgets on/off and drag to reorder on the main view and in the Customize panel; layout persists in `localStorage`
+- **Customizable dashboard** — Toggle widgets on/off and drag to reorder; layout persists in `localStorage`
 - **Clean, operations-focused UI** — Dark dashboard theme with clear status/priority badges and at-a-glance metrics
 
 ### Dashboard widgets
 
 | Widget | Description |
 |--------|-------------|
-| **Key Metrics** | Counts by status (Open, In Progress, Closed, On Hold) with urgent High/Critical cases highlighted |
+| **Key Metrics** | Counts by status (Open, In Progress, Closed, On Hold) plus urgent High/Critical; click a card to jump to that section on the Status Board |
 | **Recent Tickets** | Paginated table with status and priority badges |
 | **Status Board** | Kanban-style columns by status, plus an urgent strip for active High/Critical tickets |
-| **Category Breakdown** | Donut chart with legend; hover a segment to see category name and percentage |
+| **Ticket Analytics** | Chart grid (donut, floor, stacked, aging, trends, assignee, treemap, butterfly, heatmap) plus location map |
+
+### Ticket detail (staff)
+
+- Full ticket view at `/ticket/:id` (also `/tickets/:id`)
+- **Actions** — Update status, priority, and assignee (saved via API; activity timeline updates from the backend)
+- **Chat box** — Popup chat with optional voice dictation (Web Speech API); messages persist on the ticket
+- **Activity timeline**, photos/attachments (with remove), parts & cost, pending vendor quote approve/reject
+- **Print** and **Download PDF** icon buttons (PDF matches the print-style white layout)
+
+### Contractor portal
+
+- Sign-in at `/contractor` with username + password (session token, ~8 hours)
+- Jobs list for the signed-in vendor only (`/contractor/jobs`)
+- Filters for **status** and **priority** (same FilterBar pattern as staff; category filter omitted)
+- Floor walk / today’s route for open jobs
+- Job detail: description, summary, status update, photo upload/remove, parts & quote request, chat box with voice
+
+#### Demo contractor logins
+
+Password for all demo accounts: `demo123`
+
+| Username | Maps to assignee |
+|----------|------------------|
+| `coolair` | CoolAir Cont. |
+| `greenscape` | GreenScape |
+| `powerfix` | PowerFix HK |
+| `leo` | Leo Fung |
+| `securetech` | SecureTech |
+| `aquapipe` | AquaPipe Co. |
+| `cityplumb` | City Plumb |
+| `liftcare` | LiftCare Asia |
+| `firesafe` | FireSafe Co. |
+| `cleanpro` | CleanPro |
 
 ### Additional UX
 
-- Fixed filter bar at the top (applies to all widgets below)
-- Pagination (5 items per page) on the ticket table, status board columns, and urgent strip
+- Fixed filter bar at the top of the staff dashboard (applies to widgets below)
+- **Server-side pagination** (`page` / `limit` query params) on tables, status board columns, urgent strip, and contractor jobs
 - Loading skeletons, empty states, and error handling with retry
-- Clear filters button when any filter is active
-- Responsive layout with collapsible category legend for long lists
+- Widget nav for jumping between dashboard sections
+- Responsive layout
 
 ## Tech Stack
 
-| Layer    | Technology |
-|----------|------------|
-| Frontend | React 18, Vite, @dnd-kit |
-| Backend  | Node.js, Express |
-| Data     | JSON file (`backend/data/tickets.json`) |
+| Layer | Technology |
+|-------|------------|
+| Frontend | React 18, Vite, React Router, @dnd-kit, Leaflet, jsPDF + html2canvas |
+| Backend | Node.js, Express |
+| Data | JSON file (`backend/data/tickets.json`) |
 
 ## Prerequisites
 
@@ -72,61 +105,91 @@ The API runs at **http://localhost:3001**.
 npm run dev:frontend
 ```
 
-The dashboard opens at **http://localhost:5173**. API requests are proxied to the backend automatically.
+The app opens at **http://localhost:5173**. API requests are proxied to the backend automatically.
+
+Optional: set `OPENAI_API_KEY` in `backend/.env` for AI suggest-reply / summary / search-parse features.
+
+## Main routes
+
+| Path | Description |
+|------|-------------|
+| `/` | Staff dashboard |
+| `/ticket/:id` | Staff ticket detail |
+| `/search` | Search results |
+| `/contractor` | Contractor login |
+| `/contractor/jobs` | Contractor job list |
+| `/contractor/jobs/:id` | Contractor job detail |
 
 ## API Endpoints
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/health` | Health check |
-| GET | `/api/tickets` | List tickets (supports `?status=`, `?category=`, `?priority=`; multi-value) |
-| GET | `/api/tickets/:id` | Single ticket by ID |
-| GET | `/api/meta` | Available filter values and total count |
+| GET | `/api/tickets` | List tickets (`status`, `category`, `priority`, `assignee`, `page`, `limit`, …) |
+| GET | `/api/tickets/:id` | Single ticket (+ related, neighbors) |
+| PATCH | `/api/tickets/:id` | Update status / priority / assignee / note (chat) |
+| POST | `/api/tickets/:id/attachments` | Add photo evidence |
+| DELETE | `/api/tickets/:id/attachments/:attachmentId` | Remove attachment |
+| POST | `/api/tickets/:id/quotes` | Contractor parts & quote request |
+| PATCH | `/api/tickets/:id/quotes/:quoteId` | Staff approve/reject quote |
+| GET | `/api/contractor/accounts` | Demo contractor usernames |
+| POST | `/api/contractor/login` | Create contractor session |
+| GET | `/api/contractor/session` | Validate session (`Authorization: Bearer …`) |
+| POST | `/api/contractor/logout` | End session |
+| GET | `/api/meta` | Filter options and totals |
+| POST | `/api/tickets/:id/suggest-reply` | AI reply suggestion (optional key) |
+| POST | `/api/tickets/:id/summary` | AI ticket summary (optional key) |
+| POST | `/api/search/parse` | AI natural-language search parse (optional key) |
 
-### Filter behaviour
+### Filter & pagination behaviour
 
 - Multiple values for the same field use **OR** logic (e.g. `status=Open&status=In Progress`)
 - Different fields use **AND** logic (e.g. status + category + priority together)
 - Results are sorted by `created` date, newest first
+- Pagination is **server-side**: pass `page` and `limit`; response includes `{ tickets, pagination }`
 
 ## Project Structure
 
 ```
 butler project/
 ├── backend/
-│   ├── data/tickets.json       # 80 maintenance tickets
-│   └── src/server.js           # Express API
+│   ├── data/tickets.json
+│   └── src/
+│       ├── server.js              # App entry (middleware + mount routes)
+│       ├── ticketsStore.js        # Load/save tickets + shared helpers
+│       ├── contractorAuth.js      # Demo logins + session tokens
+│       ├── routes/
+│       │   ├── contractor.js      # /api/contractor/*
+│       │   └── api.js             # /api/tickets, meta, search
+│       ├── parseSearchQuery.js
+│       ├── suggestReply.js
+│       └── summarizeTicket.js
 ├── frontend/
 │   └── src/
-│       ├── App.jsx             # Main orchestration (filters, widgets, layout)
+│       ├── App.jsx
+│       ├── pages/                 # Dashboard routes + contractor pages
 │       ├── hooks/
-│       │   ├── useTickets.js   # API fetching & filter params
-│       │   └── useDashboardLayout.js  # Widget registry & localStorage
 │       ├── components/
-│       │   ├── FilterBar.jsx
-│       │   ├── DraggableDashboard.jsx
-│       │   ├── DashboardCustomizer.jsx
-│       │   └── widgets/        # One file per dashboard widget
-│       │       ├── StatsCards.jsx
-│       │       ├── TicketTable.jsx
-│       │       ├── StatusBoard.jsx
-│       │       ├── CategoryBreakdown.jsx
-│       │       └── index.js
-│       └── utils.js
-├── package.json                
+│       │   ├── TicketChat.jsx
+│       │   ├── TicketAttachments.jsx
+│       │   ├── TicketActionsPanel.jsx
+│       │   ├── ContractorQuoteForm.jsx
+│       │   ├── TicketDetail.css   # Ticket detail / print / quotes styles
+│       │   └── widgets/
+│       └── utils/
+├── package.json
 └── README.md
 ```
 
 ## Design Decisions
 
-- **Property manager persona** — The UI prioritizes urgent cases, status counts, and category distribution for building operations staff.
-- **Urgent visibility** — High/Critical tickets are highlighted in Key Metrics and surfaced in a dedicated urgent strip above the status board.
-- **Widget-based dashboard** — Users show only what they need and reorder via drag-and-drop; filters stay fixed at the top.
-- **Server-side filtering** — Filtering runs in the API to keep data logic out of the UI and demonstrate REST query design.
-- **Status board data** — The board uses a separate fetch without the priority filter so kanban columns still show all priorities when filtering by status/category only.
-- **JSON data source** — Keeps the backend simple and easy to run for reviewers; no database setup required.
-- **Persistent layout** — Dashboard widget order and visibility are saved to `localStorage` across page refreshes.
-- **Modular frontend** — Widgets live in separate files under `components/widgets/`; shared logic is extracted into hooks and utilities.
+- **Property manager persona** — Staff UI prioritizes urgent cases, status counts, and analytics for building operations.
+- **Contractor persona** — Vendors see only their assigned jobs, with site-first layout (description + status, evidence, quotes, chat).
+- **Urgent visibility** — High/Critical tickets are highlighted in Key Metrics and the urgent strip; metric cards deep-link into the Status Board.
+- **Server-side filtering & pagination** — Keeps list logic in the API and demonstrates REST query design.
+- **Activity as source of truth** — Status changes, chat notes, uploads, and quotes append to `ticket.activity` on the backend; the UI reads that payload.
+- **JSON data source** — Simple to run for reviewers; no database setup required.
+- **Persistent staff layout** — Widget order/visibility saved in `localStorage`.
+- **Contractor sessions** — Opaque tokens in memory (8h TTL) with credentials stored in the browser tab via `sessionStorage`.
 
 ## Production Build
 
