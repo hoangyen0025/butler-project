@@ -110,7 +110,7 @@ npm run dev:frontend
 
 The app opens at **http://localhost:5173**. API requests are proxied to the backend automatically.
 
-Optional: set `OPENAI_API_KEY` in `backend/.env` for AI suggest-reply / summary / search-parse features.
+AI suggest-reply / summary / search-parse use local fallbacks by default. Optionally set `OPENAI_API_KEY` in the process environment if you want OpenAI-backed responses.
 
 ## Main routes
 
