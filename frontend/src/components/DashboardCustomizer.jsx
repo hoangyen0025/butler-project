@@ -93,7 +93,7 @@ export function DashboardCustomizer({ order, visible, onToggle, onReorder, onClo
     <div className="customizer-overlay" onClick={onClose}>
       <div className="customizer-panel" onClick={(e) => e.stopPropagation()}>
         <h2>Customize Dashboard</h2>
-        <p>Choose which widgets to display. Drag on the dashboard or below to reorder.</p>
+        <p>Choose which widgets to display. Drag below to reorder.</p>
 
         <DndContext
           sensors={sensors}

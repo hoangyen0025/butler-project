@@ -7,21 +7,24 @@ import { statusClass, priorityClass, formatDate } from '../../utils';
 import '../UrgentStrip.css';
 
 const URGENT_PER_PAGE = 5;
-const ACTIVE_STATUSES = ['Open', 'In Progress', 'On Hold'];
+const ACTIVE_STATUSES = ['Open', 'In Progress', 'On Hold']; //no Closed 
 const URGENT_PRIORITIES = ['High', 'Critical'];
 
+//urgent ticket bar in Status Board
 export function UrgentStrip({ filters }) {
   const urgentFilters = useMemo(() => {
+    //case 1: status filter (filter.status.length > 0) -> show only the urgent strip to the status board, not include Closed
+    //case 2: no status filter (filter.status.length === 0) -> show all status to the urgent strip 
     const status =
       filters.status.length > 0
-        ? filters.status.filter((s) => s !== 'Closed')
+        ? filters.status.filter((s) => s !== 'Closed')//not include Closed
         : ACTIVE_STATUSES;
 
     return {
       status,
       category: filters.category,
       priority: URGENT_PRIORITIES,
-      search: '',
+      search: '', //clear search
     };
   }, [filters]);
 
@@ -38,18 +41,18 @@ export function UrgentStrip({ filters }) {
     hasPrev,
     hasNext,
   } = usePagedTickets(urgentFilters, URGENT_PER_PAGE, {
-    enabled: urgentFilters.status.length > 0,
+    enabled: urgentFilters.status.length > 0,  //GET /api/tickets?status=…&priority=High&priority=Critical&page=&limit=5
   });
-
-  if (urgentFilters.status.length === 0) {
+//hide the strip if: 
+  if (urgentFilters.status.length === 0) { //no status filter -> show nothing
     return null;
   }
 
-  if (loading && tickets.length === 0) {
+  if (loading && tickets.length === 0) { //loading and no tickets
     return null;
   }
 
-  if (!loading && totalItems === 0) {
+  if (!loading && totalItems === 0) { //loaded and no tickets
     return null;
   }
 

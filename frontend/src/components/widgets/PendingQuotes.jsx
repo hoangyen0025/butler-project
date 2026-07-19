@@ -1,8 +1,10 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useTickets } from '../../hooks/useTickets';
+import { formatDateTime } from '../../utils';
 import './CategoryExtraCharts.css';
 
+// load every ticket (not limited by the dashboard FilterBar).
 const ALL_TICKETS_FILTERS = {
   status: [],
   category: [],
@@ -10,20 +12,24 @@ const ALL_TICKETS_FILTERS = {
   search: '',
 };
 
+//format number to HKD
 function formatHkd(n) {
   return `HKD ${Math.round(Number(n) || 0).toLocaleString('en-HK')}`;
 }
 
 /** All pending vendor part quotes across the whole ticket set. */
 export function PendingQuotes() {
-  const { tickets, loading } = useTickets(ALL_TICKETS_FILTERS);
+  const { tickets, loading } = useTickets(ALL_TICKETS_FILTERS); //→ GET /api/tickets (no filters) so quotes from any ticket can appear.
 
   const rows = useMemo(() => {
     const items = [];
+    //loop through every ticket from useTickets -  if tickets is null/undefined, use an empty array
     for (const ticket of tickets || []) {
+      //for each quote of that ticket, loop through every quoteRequest - if no quoteRequest -> use empty array 
       for (const quote of ticket.quoteRequests || []) {
+        //if quote status = pending
         if (quote.status !== 'pending') continue;
-        items.push({
+        items.push({ //get ticket info
           ticketId: ticket.id,
           title: ticket.title,
           assignee: ticket.assignee,
@@ -36,6 +42,8 @@ export function PendingQuotes() {
       String(b.requestedAt || '').localeCompare(String(a.requestedAt || ''))
     );
   }, [tickets]);
+
+  //Pending part quotes
 
   return (
     <div className="cat-chart">
@@ -74,6 +82,9 @@ export function PendingQuotes() {
                   {row.assignee || 'Unassigned'}
                   {row.category ? ` · ${row.category}` : ''}
                   {row.note ? ` · ${row.note}` : ''}
+                  {row.requestedAt
+                    ? ` · Requested ${formatDateTime(row.requestedAt)}`
+                    : ''}
                 </p>
               </div>
               <Link

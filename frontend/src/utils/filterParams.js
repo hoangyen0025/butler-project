@@ -25,7 +25,7 @@ export function searchParamsToFilters(searchParams) {
 export function recentTicketsAllPath(filters = EMPTY_FILTERS) {
   const params = filtersToSearchParams(filters);
   const query = params.toString();
-  return query ? `/recent-ticket/all?${query}` : '/recent-ticket/all';
+  return query ? `/ticket/all?${query}` : '/ticket/all';
 }
 
 export function describeActiveFilters(filters) {

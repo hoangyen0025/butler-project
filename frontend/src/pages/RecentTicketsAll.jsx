@@ -14,8 +14,9 @@ import {
 
 const TICKETS_PER_PAGE = 20;
 
+//All ticket (/ticket/all)
 export function RecentTicketsAll() {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams(); //read/write filters in the URL 
   const { meta } = useMeta();
 
   const filters = useMemo(
@@ -45,8 +46,9 @@ export function RecentTicketsAll() {
     hasPrev,
     hasNext,
     refetch,
-  } = usePagedTickets(filters, TICKETS_PER_PAGE);
+  } = usePagedTickets(filters, TICKETS_PER_PAGE); 
 
+  //change filter in filterbar 
   const onFiltersChange = (nextFilters) => {
     const next = { ...EMPTY_FILTERS, ...nextFilters };
     const params = filtersToSearchParams(next);
@@ -64,7 +66,7 @@ export function RecentTicketsAll() {
 
           <header className="recent-all__header">
             <div>
-              <h2 className="recent-all__title">All recent tickets</h2>
+              <h2 className="recent-all__title">All tickets</h2>
               <p className="recent-all__summary">
                 {loading ? (
                   'Loading tickets…'

@@ -86,32 +86,44 @@ export function useTickets(filters, { page, limit, enabled = true } = {}) {
   return { tickets, pagination, loading, error, refetch: fetchTickets };
 }
 
-/**
- * Server-side pagination: owns page state, resets on filter changes,
- * re-fetches when the user changes page.
- */
-export function usePagedTickets(filters, limit, { enabled = true } = {}) {
-  const [page, setPage] = useState(1);
-  const resetKey = filtersKey(filters);
 
+
+//manages the page number, resets it when filters change
+//and asks useTickets to load that page from /api/tickets.
+export function usePagedTickets(filters, limit, { enabled = true } = {}) {
+  const [page, setPage] = useState(1); //page at 1 
+  const resetKey = filtersKey(filters); //reset key for filters (used to reset page when filters change)
+ 
+  //whenever the filter changes, reset the page to 1
   useEffect(() => {
     setPage(1);
   }, [resetKey]);
 
+  //call useTickets to get tickets, pagination, loading, error, refetch -> GET /api/tickets?status=Open&page=2&limit=5
+  //reuse useTickets() + add page state 
   const { tickets, pagination, loading, error, refetch } = useTickets(filters, {
     page,
     limit,
     enabled,
   });
 
+  //total pages or page = 1 
   const totalPages = Math.max(1, pagination.totalPages || 1);
 
+//to not stay past the last page 
+  //if page is > total pages -> set the page to the totalPages
+  //(Example)
+  //You had 40 tickets → 8 pages → you’re on page 8
+  //You filter → only 7 tickets left → 2 pages
+  //Without this: you’d still be on page 8 → empty/wrong page
+  //With this: page (8) > totalPages (2) → setPage(2)
   useEffect(() => {
     if (page > totalPages) {
       setPage(totalPages);
     }
   }, [page, totalPages]);
 
+  //go to a specific page (not < 1, not > totalPages)
   const goToPage = (nextPage) => {
     setPage(Math.min(Math.max(1, nextPage), totalPages));
   };

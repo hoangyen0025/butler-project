@@ -9,9 +9,10 @@ import { exportTicketsCsv } from '../../utils/csvExport';
 
 const TICKETS_PER_PAGE = 5;
 
+// Tickets widget — get filters from the dashboard FilterBar (via App.jsx).
 export function TicketTable({ filters }) {
-  const [exporting, setExporting] = useState(false);
-  const [exportError, setExportError] = useState(null);
+  const [exporting, setExporting] = useState(false); //state to track if the export is in progress
+  const [exportError, setExportError] = useState(null); //state to track if the export failed
 
   const {
     tickets,
@@ -26,12 +27,21 @@ export function TicketTable({ filters }) {
     goPrev,
     hasPrev,
     hasNext,
-  } = usePagedTickets(filters, TICKETS_PER_PAGE);
+  } = usePagedTickets(filters, TICKETS_PER_PAGE); //ex: usePagedTickets(filters, 5)
 
+
+
+  //export tickets to CSV
+  //1. check if exporting or no tickets -> ignore 
+  //2. set exporting to true to disable the button and show the loading state
+  //3. clear error message 
+  //4. try to export tickets
+  //5. if error, set error message
+  //6. finally, set exporting to false to enable the button again
   const handleExport = async () => {
-    if (exporting || totalItems === 0) return;
-    setExporting(true);
-    setExportError(null);
+    if (exporting || totalItems === 0) return; //exporting or no tickets -> ignore 
+    setExporting(true); //set exporting to true to disable the button and show the loading state
+    setExportError(null); //clear error message 
     try {
       await exportTicketsCsv(filters);
     } catch (err) {
@@ -41,21 +51,26 @@ export function TicketTable({ filters }) {
     }
   };
 
+  //Loading, no data 
   if (loading && tickets.length === 0) {
     return <div className="empty-state">Loading tickets…</div>;
   }
 
+  //Error loading tickets
   if (error) {
     return <div className="empty-state">Unable to load tickets.</div>;
   }
 
+  //No tickets match the current filters
   if (totalItems === 0) {
     return <div className="empty-state">No tickets match the current filters.</div>;
   }
 
   return (
     <div className="table-wrap">
+      {/* Toolbar to display the number of tickets and export, see all button */}
       <div className="table-wrap__toolbar">
+        {/* Display the number of tickets */}
         <p className="table-wrap__hint">
           Showing {Math.min(pageSize, tickets.length)} of {totalItems}
           {exportError && (
@@ -66,6 +81,7 @@ export function TicketTable({ filters }) {
           )}
         </p>
         <div className="table-wrap__actions">
+          {/* Export CSV button */}
           <button
             type="button"
             className="table-wrap__export"
@@ -75,11 +91,13 @@ export function TicketTable({ filters }) {
           >
             {exporting ? 'Exporting…' : 'Export CSV'}
           </button>
+           {/* See all tickets buttton  */}
           <Link to={recentTicketsAllPath(filters)} className="table-wrap__see-all">
             See all
           </Link>
         </div>
       </div>
+      {/* Table to display the tickets */}
       <table className="ticket-table">
         <thead>
           <tr>
@@ -120,6 +138,7 @@ export function TicketTable({ filters }) {
           ))}
         </tbody>
       </table>
+      {/* Pagination to navigate between pages */}
       <Pagination
         page={page}
         totalPages={totalPages}

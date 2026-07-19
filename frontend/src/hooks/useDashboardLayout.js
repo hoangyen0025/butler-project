@@ -10,7 +10,7 @@ export const WIDGET_DEFINITIONS = [
   },
   {
     id: 'table',
-    title: 'Recent Tickets',
+    title: 'Tickets',
     description: 'Table of all matching tickets',
   },
   {
@@ -105,7 +105,7 @@ export function useDashboardLayout() {
   };
 
   const resetLayout = () => {
-    setLayout({ order: DEFAULT_ORDER, visible: DEFAULT_VISIBLE });
+     ({ order: DEFAULT_ORDER, visible: DEFAULT_VISIBLE });
   };
 
   const visibleWidgets = layout.order.filter((id) => layout.visible[id]);

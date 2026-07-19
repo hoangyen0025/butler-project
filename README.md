@@ -8,7 +8,7 @@ A maintenance ticket dashboard built for the Butler Asia technical assessment. P
 
 - **Ticket list** — 80 realistic maintenance tickets served from a JSON data source via a Node.js API
 - **Multi-select filtering** — Filter by status, category, and priority; filters are combinable (AND across types, OR within each type)
-- **Customizable dashboard** — Toggle widgets on/off and drag to reorder; layout persists in `localStorage`
+- **Customizable dashboard** — Toggle widgets on/off and reorder them in the Customize panel; layout persists in `localStorage`
 - **Clean, operations-focused UI** — Dark dashboard theme with clear status/priority badges and at-a-glance metrics
 
 ### Dashboard widgets
@@ -16,7 +16,7 @@ A maintenance ticket dashboard built for the Butler Asia technical assessment. P
 | Widget | Description |
 |--------|-------------|
 | **Key Metrics** | Counts by status (Open, In Progress, Closed, On Hold) plus urgent High/Critical; click a card to jump to that section on the Status Board |
-| **Recent Tickets** | Paginated table with status and priority badges |
+| **Tickets** | Paginated table with status and priority badges |
 | **Status Board** | Kanban columns by status, urgent strip for High/Critical tickets, and **all pending part quotes** listed below the board (site-wide, independent of dashboard filters) |
 | **Ticket Analytics** | Chart grid (donut, floor, stacked, aging, trends, assignee, treemap, butterfly, heatmap) plus location map |
 
@@ -119,7 +119,7 @@ AI suggest-reply / summary / search-parse use local fallbacks by default. Option
 | `/` | Staff dashboard |
 | `/ticket/:id` | Staff ticket detail |
 | `/tickets/:id` | Alias for staff ticket detail |
-| `/recent-ticket/all` | Full recent-tickets list (respects dashboard filters) |
+| `/ticket/all` | Full tickets list (respects dashboard filters) |
 | `/search` | Search results |
 | `/contractor` | Contractor login |
 | `/contractor/jobs` | Contractor job list |

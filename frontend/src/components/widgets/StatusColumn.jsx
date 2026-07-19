@@ -5,24 +5,33 @@ import { Pagination } from '../Pagination';
 import { usePagedTickets } from '../../hooks/useTickets';
 import { statusClass, priorityClass, formatDate } from '../../utils';
 
-const STATUS_BOARD_PER_PAGE = 5;
+const STATUS_BOARD_PER_PAGE = 5; //5 tickets per page
 
+//Kanban column on the Status Board (Open, In Progress, On Hold, or Closed).
 export function StatusColumn({ status, filters }) {
+
+  //useMemo: filters or status changes -> recalculate the column filters. if no change, reuse 
   const columnFilters = useMemo(() => {
+    //case 1 (:[status]): no status filter (filter.status.length === 0) -> show all status column to the status board 
+    //case 2: status filter (filter.status.length > 0) -> show only the status column to the status board 
     const allowedStatuses =
       filters.status.length > 0
-        ? filters.status.filter((s) => s === status)
+      //from the user’s selected statuses, keep only the one that matches this column
+        ? filters.status.filter((s) => s === status) 
         : [status];
 
     return {
-      status: allowedStatuses,
-      category: filters.category,
-      priority: filters.priority,
-      search: '',
+      status: allowedStatuses,//keep only the statuses that match this column
+      category: filters.category,//keep category filter
+      priority: filters.priority, //keep priority filter
+      search: '', //clear search
     };
   }, [filters, status]);
 
-  const enabled = columnFilters.status.length > 0;
+  //columnFilters.status = ["something"]  →  length > 0  →  true -> GET /api/tickets?status=Open&page=1&limit=5
+
+  //columnFilters.status = [] →  length = 0  →  false -> no call API
+  const enabled = columnFilters.status.length > 0; 
 
   const {
     tickets,
@@ -35,18 +44,20 @@ export function StatusColumn({ status, filters }) {
     goPrev,
     hasPrev,
     hasNext,
-  } = usePagedTickets(columnFilters, STATUS_BOARD_PER_PAGE, { enabled });
+  } = usePagedTickets(columnFilters, STATUS_BOARD_PER_PAGE, { enabled });//enable is true: GET /api/tickets?status=Open&page=1&limit=5
 
+ //neu enable: count bang totalItems nguoc lai count = 0 
   const count = enabled ? totalItems : 0;
 
   return (
     <div className="status-column" id={`status-column-${status.replace(/\s+/g, '-')}`}>
       <div className={`status-column__header status-column__header--${statusClass(status)}`}>
-        <span>{status}</span>
-        <span className="status-column__count">{count}</span>
+        <span>{status}</span> {/* Status column name */}
+        <span className="status-column__count">{count}</span> {/* Number of tickets in the column */}
       </div>
       <div className="status-column__cards">
         {count === 0 ? (
+          //No tickets in the column
           <div className="empty-state" style={{ padding: '1rem' }}>
             No tickets
           </div>
@@ -59,16 +70,17 @@ export function StatusColumn({ status, filters }) {
                 className="ticket-card ticket-card--link"
               >
                 <div className="ticket-card__header">
-                  <span className="ticket-card__id">#{ticket.id}</span>
-                  <span className="ticket-card__date">{formatDate(ticket.created)}</span>
+                  <span className="ticket-card__id">#{ticket.id}</span> {/* Ticket ID */}
+                  <span className="ticket-card__date">{formatDate(ticket.created)}</span> {/* Ticket creation date */}
                 </div>
-                <div className="ticket-card__title">{ticket.title}</div>
+                <div className="ticket-card__title">{ticket.title}</div> {/* Ticket title */}
                 <div className="ticket-card__meta">
-                  <Badge type={priorityClass(ticket.priority)} value={ticket.priority} />
-                  <Badge type="low" value={ticket.category} />
+                  <Badge type={priorityClass(ticket.priority)} value={ticket.priority} /> {/* Ticket priority */}
+                  <Badge type="low" value={ticket.category} /> {/* Ticket category */}
                 </div>
               </Link>
             ))}
+            {/* Pagination to navigate between pages */}
             <Pagination
               page={page}
               totalPages={totalPages}

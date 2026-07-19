@@ -22,6 +22,7 @@ const {
 
 const router = express.Router();
 
+//tickets and dashboard features 
 router.get('/tickets', (req, res) => {
   const statuses = parseQueryList(req.query.status);
   const categories = parseQueryList(req.query.category);
@@ -604,11 +605,14 @@ router.post('/search/parse', async (req, res) => {
   }
 });
 
+//return all filter options 
 router.get('/meta', (_req, res) => {
-  const tickets = loadTickets();
+  const tickets = loadTickets(); //load all tickets 
+  //to build unique sorted lists for each field - unique('category') -> returns ['Electrical', 'HVAC', 'Plumbing']
   const unique = (key) => [...new Set(tickets.map((t) => t[key]).filter(Boolean))].sort();
 
   res.json({
+    //if unique list is non-empty, return it. otw, use hardcoded defaults 
     statuses: unique('status').length ? unique('status') : STATUSES,
     categories: unique('category'),
     priorities: unique('priority').length ? unique('priority') : PRIORITIES,

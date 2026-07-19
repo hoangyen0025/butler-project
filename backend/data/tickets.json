@@ -10681,7 +10681,7 @@
     "location": "Tenant unit · Car Park · Guard booth",
     "reporter": "Reception",
     "assignee": "Leo Fung",
-    "updated": "2026-07-15",
+    "updated": "2026-07-18",
     "dueDate": "2026-06-23",
     "assetId": "PLOT-05",
     "floor": "Car Park",
@@ -10741,17 +10741,15 @@
         "type": "note",
         "actor": "Dashboard User",
         "text": "tutu"
+      },
+      {
+        "at": "2026-07-18T09:07:16.698Z",
+        "type": "message",
+        "actor": "Dashboard User",
+        "text": "Removed photo evidence: Before"
       }
     ],
     "attachments": [
-      {
-        "id": "before-78",
-        "kind": "before",
-        "label": "Before",
-        "url": "https://picsum.photos/seed/78-before/480/320",
-        "capturedAt": "2026-06-24",
-        "uploadedBy": "Leo Fung"
-      },
       {
         "id": "damage-78",
         "kind": "damage",

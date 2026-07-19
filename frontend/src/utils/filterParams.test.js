@@ -23,8 +23,8 @@ describe('filterParams', () => {
     expect(searchParamsToFilters(params)).toEqual(filters);
   });
 
-  it('builds recent tickets path with and without query', () => {
-    expect(recentTicketsAllPath()).toBe('/recent-ticket/all');
+  it('builds tickets-all path with and without query', () => {
+    expect(recentTicketsAllPath()).toBe('/ticket/all');
     expect(
       recentTicketsAllPath({
         status: ['Open'],
@@ -32,7 +32,7 @@ describe('filterParams', () => {
         priority: [],
         search: '',
       })
-    ).toBe('/recent-ticket/all?status=Open');
+    ).toBe('/ticket/all?status=Open');
   });
 
   it('describeActiveFilters lists only set fields', () => {

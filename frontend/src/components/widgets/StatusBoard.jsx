@@ -8,15 +8,16 @@ export function StatusBoard({ filters }) {
   return (
     <div className="status-board-wrap">
       <div id="status-board-urgent">
-        <UrgentStrip filters={filters} />
+        <UrgentStrip filters={filters} /> {/* Urgent strip to display urgent tickets */}
       </div>
       <div className="status-board">
         {statuses.map((status) => (
-          <StatusColumn key={status} status={status} filters={filters} />
+          /* Status column to display the tickets in the column */
+          <StatusColumn key={status} status={status} filters={filters} /> 
         ))}
       </div>
       <div className="status-board__quotes">
-        <PendingQuotes />
+        <PendingQuotes /> {/* Pending quotes to display the pending quotes */}
       </div>
     </div>
   );
