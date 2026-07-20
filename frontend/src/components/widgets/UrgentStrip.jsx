@@ -82,6 +82,7 @@ export function UrgentStrip({ filters }) {
                 <span className="urgent-strip__item-date">{formatDate(ticket.created)}</span>
               </div>
               <span className="urgent-strip__item-title">{ticket.title}</span>
+              <span className="urgent-strip__item-asset">{ticket.assetId || '—'}</span>
             </div>
             <div className="urgent-strip__item-meta">
               <Badge type={statusClass(ticket.status)} value={ticket.status} />

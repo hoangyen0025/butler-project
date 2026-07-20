@@ -149,19 +149,30 @@ function toRelatedTicket(ticket) {
   };
 }
 
+//this func (): find other tickets related to the current ticket 
+//ticket: the ticket you're viewing 
+//allTickets: all tickets in the database 
+
 function findRelatedTickets(ticket, allTickets, limit = 5) {
   const others = allTickets.filter((t) => t.id !== ticket.id);
 
+  //HOW IT PICKS "RELATED"
+  //same asset  (assetID)
+  //all tickets except the one you're viewing 
   const sameAsset = others.filter(
+    //current ticket must have an assetId, assetId of t object must match assetId of ticket.
     (t) => ticket.assetId && t.assetId === ticket.assetId
   );
+  //same floor and category (floor, category)
   const sameFloorAndCategory = others.filter(
     (t) =>
       ticket.floor &&
       t.floor === ticket.floor &&
       t.category === ticket.category
   );
+  //same floor 
   const sameFloor = others.filter((t) => ticket.floor && t.floor === ticket.floor);
+  //same category 
   const sameCategory = others.filter((t) => t.category === ticket.category);
 
   const seen = new Set();

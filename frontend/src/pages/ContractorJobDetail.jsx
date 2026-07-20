@@ -264,6 +264,10 @@ export function ContractorJobDetail() {
                     <dd>{vendor?.jobRef || '—'}</dd>
                   </div>
                   <div>
+                    <dt>Asset ID</dt>
+                    <dd>{ticket.assetId || '—'}</dd>
+                  </div>
+                  <div>
                     <dt>Due</dt>
                     <dd>{formatDate(ticket.dueDate)}</dd>
                   </div>

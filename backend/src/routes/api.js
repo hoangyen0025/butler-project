@@ -100,8 +100,13 @@ router.get('/tickets', (req, res) => {
   res.json({ tickets: pageTickets, pagination });
 });
 
+//get a single ticket by id + prev/next ids 
 router.get('/tickets/:id', (req, res) => {
-  const tickets = loadTickets();
+  const tickets = loadTickets(); //read all tickets from tickets.json 
+  //go through tickets one by one 
+  //for each item, call it t (ticket object)
+  //id id of t = id from URL 
+  //return that ticket 
   const ticket = tickets.find((t) => t.id === Number(req.params.id));
 
   if (!ticket) {
@@ -584,6 +589,7 @@ router.post('/tickets/:id/summary', async (req, res) => {
   }
 });
 
+//parse natural-language search query into structured filters
 router.post('/search/parse', async (req, res) => {
   const q = String(req.body?.q || req.body?.query || '').trim();
   if (!q) {

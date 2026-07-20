@@ -1,5 +1,5 @@
 {
-  "name": "butler-maintenance-dashboard-frontend",
+  "name": "maintenance-dashboard-frontend",
   "private": true,
   "version": "1.0.0",
   "type": "module",
@@ -14,10 +14,10 @@
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
-    "butler-maintenance-dashboard": "file:..",
     "html2canvas": "^1.4.1",
     "jspdf": "^4.2.1",
     "leaflet": "^1.9.4",
+    "maintenance-dashboard": "file:..",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.18.1"

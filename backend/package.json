@@ -1,7 +1,7 @@
 {
-  "name": "butler-maintenance-api",
+  "name": "maintenance-api",
   "version": "1.0.0",
-  "description": "Maintenance ticket API for Butler Asia technical assessment",
+  "description": "Maintenance ticket API",
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
@@ -9,8 +9,8 @@
     "test": "node --test src/contractorAuth.test.js src/ticketsStore.test.js"
   },
   "dependencies": {
-    "butler-maintenance-dashboard": "file:..",
     "cors": "^2.8.5",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "maintenance-dashboard": "file:.."
   }
 }

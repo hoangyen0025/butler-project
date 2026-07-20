@@ -25,12 +25,12 @@ export function Header({ onCustomize, activeCases = 0, totalTickets = 0, showSea
     <header className="header">
       <Link to="/" className="header__brand">
         <div className="header__logo" aria-hidden="true">
-          B
+          M
         </div>
         <div>
           <h1 className="header__title">Maintenance Dashboard</h1>
           <p className="header__subtitle">
-            Butler Asia · Active cases: <strong>{activeCases}</strong>
+            Active cases: <strong>{activeCases}</strong>
             {totalTickets > 0 && (
               <>
                 {' '}

@@ -125,7 +125,8 @@ function Dashboard() {
 
 function App() {
   return (
-    //routing for URLs 
+    //routing for URLs  
+    //pages folder
     <Routes>
       <Route path="/" element={<Dashboard />} />
       <Route path="/search" element={<SearchResults />} />

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-const STORAGE_KEY = 'butler-contractor-session';
+const STORAGE_KEY = 'maintenance-contractor-session';
 const API_BASE = '/api';
 
 function readStoredSession() {

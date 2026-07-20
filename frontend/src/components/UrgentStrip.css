@@ -96,6 +96,14 @@
   line-height: 1.35;
 }
 
+.urgent-strip__item-asset {
+  display: block;
+  margin-top: 0.15rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+
 .urgent-strip__item-meta {
   display: flex;
   gap: 0.35rem;

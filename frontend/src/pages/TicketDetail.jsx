@@ -335,6 +335,10 @@ export function TicketDetail() {
                   <dd>{ticket.location || '—'}</dd>
                 </div>
                 <div>
+                  <dt>Asset ID</dt>
+                  <dd>{ticket.assetId || '—'}</dd>
+                </div>
+                <div>
                   <dt>Reporter</dt>
                   <dd>{ticket.reporter || '—'}</dd>
                 </div>

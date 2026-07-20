@@ -1,8 +1,8 @@
 {
-  "name": "butler-maintenance-dashboard",
+  "name": "maintenance-dashboard",
   "version": "1.0.0",
   "private": true,
-  "description": "Maintenance ticket dashboard for Butler Asia technical assessment",
+  "description": "Maintenance ticket dashboard",
   "scripts": {
     "install:all": "npm install --prefix backend && npm install --prefix frontend",
     "dev:backend": "npm run dev --prefix backend",

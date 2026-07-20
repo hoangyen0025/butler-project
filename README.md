@@ -1,6 +1,6 @@
-# Butler Maintenance Dashboard
+# Maintenance Dashboard
 
-A maintenance ticket dashboard built for the Butler Asia technical assessment. Property managers can view, filter, and customize their building maintenance overview; vendors use a contractor portal to work assigned jobs on site.
+A maintenance ticket dashboard. Property managers can view, filter, and customize their building maintenance overview; vendors use a contractor portal to work assigned jobs on site.
 
 ## Features
 
@@ -155,7 +155,7 @@ AI suggest-reply / summary / search-parse use local fallbacks by default. Option
 ## Project Structure
 
 ```
-butler project/
+maintenance-dashboard/
 ├── backend/
 │   ├── data/tickets.json
 │   └── src/

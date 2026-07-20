@@ -1,4 +1,4 @@
-/** Approximate Butler Asia HQ site (Hong Kong Central waterfront). */
+/** Approximate site coordinates (Hong Kong Central waterfront). */
 export const BUILDING_CENTER = { lat: 22.28552, lng: 114.15769 };
 
 /** Walk order: basement / parking → ground → upper floors → plant / roof. */

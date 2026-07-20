@@ -1170,6 +1170,13 @@ tr:hover td {
   margin-bottom: 0.35rem;
 }
 
+.ticket-card__asset {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  margin-bottom: 0.35rem;
+}
+
 .ticket-card__meta {
   display: flex;
   gap: 0.35rem;

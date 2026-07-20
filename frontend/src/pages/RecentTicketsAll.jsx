@@ -49,10 +49,15 @@ export function RecentTicketsAll() {
   } = usePagedTickets(filters, TICKETS_PER_PAGE); 
 
   //change filter in filterbar 
+  //next = {
+      // status: ['Open'],      // from nextFilters
+      // category: ['HVAC'],    // from nextFilters
+      // priority: [],          // kept from EMPTY_FILTERS
+      // search: '',            // kept from EMPTY_FILTERS
   const onFiltersChange = (nextFilters) => {
     const next = { ...EMPTY_FILTERS, ...nextFilters };
-    const params = filtersToSearchParams(next);
-    setSearchParams(params, { replace: true });
+    const params = filtersToSearchParams(next); //Turns filters into URL query params, e.g. status=Open&priority=High.
+    setSearchParams(params, { replace: true }); //Updates the browser URL
   };
 
   return (
@@ -121,6 +126,7 @@ export function RecentTicketsAll() {
                     <th className="ticket-table__col-id">ID</th>
                     <th className="ticket-table__col-title">Title</th>
                     <th className="ticket-table__col-location">Location</th>
+                    <th className="ticket-table__col-asset">Asset ID</th>
                     <th>Status</th>
                     <th>Category</th>
                     <th>Priority</th>
@@ -142,6 +148,9 @@ export function RecentTicketsAll() {
                       </td>
                       <td className="ticket-table__location" title={ticket.location || ''}>
                         {ticket.location || '—'}
+                      </td>
+                      <td className="ticket-table__asset" title={ticket.assetId || ''}>
+                        {ticket.assetId || '—'}
                       </td>
                       <td>
                         <Badge type={statusClass(ticket.status)} value={ticket.status} />

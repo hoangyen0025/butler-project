@@ -1,6 +1,6 @@
 ﻿import { useState, useEffect } from 'react';
 
-const STORAGE_KEY = 'butler-dashboard-layout';
+const STORAGE_KEY = 'maintenance-dashboard-layout';
 
 export const WIDGET_DEFINITIONS = [
   {

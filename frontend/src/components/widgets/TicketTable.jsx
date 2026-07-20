@@ -104,6 +104,7 @@ export function TicketTable({ filters }) {
             <th className="ticket-table__col-id">ID</th>
             <th className="ticket-table__col-title">Title</th>
             <th className="ticket-table__col-location">Location</th>
+            <th className="ticket-table__col-asset">Asset ID</th>
             <th>Status</th>
             <th>Category</th>
             <th>Priority</th>
@@ -125,6 +126,9 @@ export function TicketTable({ filters }) {
               </td>
               <td className="ticket-table__location" title={ticket.location || ''}>
                 {ticket.location || '—'}
+              </td>
+              <td className="ticket-table__asset" title={ticket.assetId || ''}>
+                {ticket.assetId || '—'}
               </td>
               <td>
                 <Badge type={statusClass(ticket.status)} value={ticket.status} />

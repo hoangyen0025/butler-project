@@ -27,7 +27,7 @@ function loadGoogleMaps(apiKey) {
   if (googleMapsPromise) return googleMapsPromise;
 
   googleMapsPromise = new Promise((resolve, reject) => {
-    const existing = document.querySelector('script[data-butler-google-maps]');
+    const existing = document.querySelector('script[data-maintenance-google-maps]');
     if (existing) {
       existing.addEventListener('load', () => resolve(window.google.maps));
       existing.addEventListener('error', reject);
@@ -37,7 +37,7 @@ function loadGoogleMaps(apiKey) {
     script.src = `https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(apiKey)}`;
     script.async = true;
     script.defer = true;
-    script.dataset.butlerGoogleMaps = 'true';
+    script.dataset.maintenanceGoogleMaps = 'true';
     script.onload = () => resolve(window.google.maps);
     script.onerror = () => reject(new Error('Failed to load Google Maps'));
     document.head.appendChild(script);

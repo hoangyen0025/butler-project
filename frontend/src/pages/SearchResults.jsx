@@ -17,9 +17,10 @@ const EMPTY_PARSED = {
   overdue: false,
   search: '',
 };
-
+//Search Results (/search)
+//take natural-language search query from the URL, e.g. "leaking HVAC on 12/F overdue" or "open electrical critical"
 export function SearchResults() {
-  const [searchParams] = useSearchParams();
+  const [searchParams] = useSearchParams(); 
   const query = (searchParams.get('q') || '').trim();
 
   const [parsed, setParsed] = useState(null);
@@ -213,6 +214,7 @@ export function SearchResults() {
                   <tr>
                     <th className="ticket-table__col-id">ID</th>
                     <th className="ticket-table__col-title">Title</th>
+                    <th className="ticket-table__col-asset">Asset ID</th>
                     <th>Status</th>
                     <th>Category</th>
                     <th>Priority</th>
@@ -239,6 +241,9 @@ export function SearchResults() {
                         >
                           {ticket.title}
                         </Link>
+                      </td>
+                      <td className="ticket-table__asset" title={ticket.assetId || ''}>
+                        {ticket.assetId || '—'}
                       </td>
                       <td>
                         <Badge type={statusClass(ticket.status)} value={ticket.status} />

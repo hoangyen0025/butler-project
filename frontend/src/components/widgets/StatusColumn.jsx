@@ -74,6 +74,7 @@ export function StatusColumn({ status, filters }) {
                   <span className="ticket-card__date">{formatDate(ticket.created)}</span> {/* Ticket creation date */}
                 </div>
                 <div className="ticket-card__title">{ticket.title}</div> {/* Ticket title */}
+                <div className="ticket-card__asset">{ticket.assetId || '—'}</div>
                 <div className="ticket-card__meta">
                   <Badge type={priorityClass(ticket.priority)} value={ticket.priority} /> {/* Ticket priority */}
                   <Badge type="low" value={ticket.category} /> {/* Ticket category */}
